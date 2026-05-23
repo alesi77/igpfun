@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IGPFun — Super Formula Light League</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --dark: #0f0f0f;
+    --panel: #141414;
+    --border: #1f1f1f;
+    --red: #e8001e;
+    --red-dark: #a80015;
+    --neon: #00ffe0;
+    --neon-dim: rgba(0,255,224,0.12);
+    --neon-mid: rgba(0,255,224,0.35);
+    --white: #f0f0f0;
+    --grey: #888;
+    --grey-light: #bbb;
+    --gold: #ffd700;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-logo em {
+    font-style: normal;
+    color: var(--neon);
+    font-size: 0.65em;
+    display: block;
+    letter-spacing: 0.25em;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: -2px;
+  }
+  .nav-links { display: flex; gap: 0.2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--neon); background: var(--neon-dim); }
+
+  /* PAGES */
+  .page { display: none; padding-top: 60px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 4rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 70% 50%, rgba(232,0,30,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 85% 20%, rgba(0,255,224,0.05) 0%, transparent 50%),
+      linear-gradient(180deg, #0f0f0f 0%, #080808 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 80%);
+  }
+  .hero-accent {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, transparent, var(--red), var(--neon), transparent);
+    opacity: 0.6;
+  }
+  .hero-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--neon);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero-title .red { color: var(--red); }
+  .hero-title .italic { font-style: italic; color: var(--grey-light); }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--grey);
+    margin-top: 1.5rem;
+    max-width: 480px;
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.6s forwards;
+  }
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.8s forwards;
+  }
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--red);
+    border: none;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #ff0022; transform: translateY(-2px); }
+  .btn-secondary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon);
+    background: transparent;
+    border: 1px solid var(--neon-mid);
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { background: var(--neon-dim); border-color: var(--neon); }
+  .hero-stats {
+    position: absolute;
+    bottom: 3rem; left: 4rem;
+    display: flex;
+    gap: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 1s forwards;
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--red); }
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* HOME SECTIONS */
+  .home-section { padding: 4rem; border-top: 1px solid var(--border); }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+  }
+
+  /* NEWS GRID */
+  .news-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+  .news-card {
+    background: var(--panel);
+    padding: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .news-card:hover { background: #1a1a1a; }
+  .news-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .news-card:hover::before { transform: scaleX(1); }
+  .news-card.featured { grid-row: span 2; }
+  .news-cat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .news-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+  }
+  .news-card.featured .news-title { font-size: 1.9rem; }
+  .news-body { font-size: 0.85rem; color: var(--grey); line-height: 1.6; font-weight: 300; }
+  .news-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    margin-top: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* PAGE INNER */
+  .page-inner { padding: 3rem 4rem; }
+  .page-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .page-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    margin-bottom: 3rem;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    padding: 0.75rem 1.8rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab:hover { color: var(--white); }
+  .tab.active { color: var(--neon); border-bottom-color: var(--neon); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* STANDINGS TABLE */
+  .standings-table { width: 100%; border-collapse: collapse; }
+  .standings-table thead tr { border-bottom: 1px solid var(--border); }
+  .standings-table th {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 400;
+  }
+  .standings-table th:last-child { text-align: right; }
+  .standings-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    transition: background 0.15s;
+  }
+  .standings-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+  .standings-table td { padding: 1rem 1rem; font-size: 0.92rem; }
+  .pos-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--grey);
+    width: 50px;
+  }
+  .pos-num.p1 { color: var(--gold); }
+  .pos-num.p2 { color: var(--silver); }
+  .pos-num.p3 { color: var(--bronze); }
+  .driver-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+  }
+  .driver-nat { font-size: 0.75rem; color: var(--grey); font-weight: 300; }
+  .driver-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--red);
+    background: rgba(232,0,30,0.1);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .points {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--white);
+    text-align: right;
+  }
+  .pts-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+  }
+  .flag { font-size: 1.1rem; margin-right: 0.4rem; }
+  .race-pts { display: flex; gap: 4px; flex-wrap: wrap; }
+  .rp {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    background: var(--border);
+    border-radius: 2px;
+    color: var(--grey-light);
+  }
+  .rp.win { background: rgba(232,0,30,0.2); color: var(--red); }
+  .highlight-row { background: rgba(255,215,0,0.03) !important; }
+
+  /* CALENDAR */
+  .calendar-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); }
+  .race-row {
+    background: var(--panel);
+    display: grid;
+    grid-template-columns: 80px 1fr 200px 160px;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 2rem;
+    transition: background 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+  .race-row:hover { background: #1a1a1a; }
+  .race-row.completed { opacity: 0.6; }
+  .race-row.next { border-left: 3px solid var(--neon); opacity: 1; }
+  .race-row.next::after {
+    content: 'NEXT RACE';
+    position: absolute;
+    right: 2rem; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    background: var(--neon-dim);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--neon-mid);
+    border-radius: 2px;
+  }
+  .round-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: var(--border);
+    line-height: 1;
+  }
+  .race-row.next .round-num { color: rgba(0,255,224,0.2); }
+  .race-row.completed .round-num { color: #222; }
+  .race-track {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.2rem;
+  }
+  .race-country { font-size: 0.8rem; color: var(--grey); font-weight: 300; }
+  .race-date-col {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--grey-light);
+    letter-spacing: 0.05em;
+  }
+  .race-time { font-size: 0.7rem; color: var(--grey); margin-top: 0.3rem; }
+  .race-winner { display: flex; flex-direction: column; align-items: flex-end; }
+  .winner-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .winner-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gold);
+  }
+  .tbd { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--grey); letter-spacing: 0.1em; }
+
+  /* DRIVERS */
+  .drivers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+  .driver-card {
+    background: var(--panel);
+    padding: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .driver-card:hover { background: #1c1c1c; }
+  .driver-card-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 5rem;
+    color: rgba(255,255,255,0.04);
+    position: absolute;
+    right: 1rem; top: 0.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+  .driver-card:hover .driver-card-num { color: rgba(232,0,30,0.08); }
+  .driver-card-nat { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .driver-card-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+  }
+  .driver-card-team { font-size: 0.8rem; color: var(--grey); margin-bottom: 1.5rem; font-weight: 300; }
+  .driver-card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+  }
+  .dcs { display: flex; flex-direction: column; align-items: center; }
+  .dcs-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.3rem; }
+  .dcs-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+    text-align: center;
+  }
+
+  /* RULES */
+  .reg-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 60px);
+  }
+  .reg-sidebar {
+    border-right: 1px solid var(--border);
+    padding: 2rem 0;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  .reg-sidebar-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .reg-nav-item {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+    text-transform: uppercase;
+    border-left: 2px solid transparent;
+  }
+  .reg-nav-item:hover { color: var(--white); background: rgba(255,255,255,0.02); }
+  .reg-nav-item.active { color: var(--neon); border-left-color: var(--neon); background: var(--neon-dim); }
+  .reg-content { padding: 3rem 4rem; }
+  .reg-section { display: none; }
+  .reg-section.active { display: block; }
+  .reg-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .reg-version {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    margin-bottom: 2.5rem;
+  }
+  .reg-article { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+  .reg-article:last-child { border-bottom: none; }
+  .art-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+  }
+  .art-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .art-body { font-size: 0.9rem; color: var(--grey-light); line-height: 1.75; font-weight: 300; }
+  .art-body p { margin-bottom: 0.8rem; }
+  .rule-table { width: 100%; border-collapse: collapse; margin-top: 1.2rem; }
+  .rule-table th {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.6rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .rule-table td {
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    color: var(--grey-light);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .rule-table td:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    color: var(--white);
+    font-size: 1rem;
+  }
+
+  /* NEWS LIST */
+  .news-list { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); }
+  .news-item {
+    background: var(--panel);
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 140px;
+    gap: 2rem;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .news-item:hover { background: #1a1a1a; border-left-color: var(--red); }
+  .ni-cat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.6rem;
+  }
+  .ni-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .ni-body { font-size: 0.82rem; color: var(--grey); line-height: 1.6; font-weight: 300; }
+  .ni-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--grey);
+    text-align: right;
+    align-self: flex-start;
+    letter-spacing: 0.05em;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4rem;
+  }
+  .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 0.08em; color: var(--grey); }
+  .footer-logo span { color: var(--red); }
+  .footer-copy { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--grey); letter-spacing: 0.1em; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--grey); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; cursor: pointer; }
+  .footer-links a:hover { color: var(--neon); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-neon {
+    0%, 100% { box-shadow: 0 0 8px rgba(0,255,224,0.4); }
+    50% { box-shadow: 0 0 20px rgba(0,255,224,0.8); }
+  }
+  .next-badge {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--neon);
+    border-radius: 50%;
+    animation: pulse-neon 1.8s ease-in-out infinite;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">
+    IGP<span>FUN</span>
+    <em>Super Formula Light</em>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('news')" id="nav-news">News</a></li>
+    <li><a onclick="showPage('calendar')" id="nav-calendar">Calendar</a></li>
+    <li><a onclick="showPage('standings')" id="nav-standings">Standings</a></li>
+    <li><a onclick="showPage('drivers')" id="nav-drivers">Drivers</a></li>
+    <li><a onclick="showPage('rules')" id="nav-rules">Regulations</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HOME ===== -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-tag">⬤ Season 2025 — iRacing</div>
+    <h1 class="hero-title">
+      IGP<span class="red">FUN</span><br>
+      <span class="italic">Super Formula</span><br>
+      Light
+    </h1>
+    <p class="hero-sub">The premier sim racing league dedicated to Super Formula Light on iRacing. Speed, precision and fair play every week.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="showPage('standings')">Standings →</button>
+      <button class="btn-secondary" onclick="showPage('calendar')">Race Calendar</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">16<span>.</span></div>
+        <div class="stat-label">Drivers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">10<span>.</span></div>
+        <div class="stat-label">Rounds</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4<span>.</span></div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0<span>.</span></div>
+        <div class="stat-label">Penalties</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-section">
+    <div class="section-header">
+      <h2 class="section-title">Latest News</h2>
+      <div class="section-line"></div>
+      <span class="section-tag">News</span>
+    </div>
+    <div class="news-grid">
+      <div class="news-card featured">
+        <div class="news-cat">🏆 Race Report</div>
+        <div class="news-title">Rossi dominates at Suzuka: flawless performance in Round 4</div>
+        <div class="news-body">Marco Rossi takes his second win of the season with an impeccable lights-to-flag drive from pole position. Bianchi finishes second while Esposito completes the podium after charging from sixth.</div>
+        <div class="news-date">JAN 18, 2025 — 21:45</div>
+      </div>
+      <div class="news-card">
+        <div class="news-cat">📋 Official Notice</div>
+        <div class="news-title">Qualifying Format Update from Round 5</div>
+        <div class="news-body">A two-stage Q1/Q2 format will be introduced from Round 5 onwards. Full details in the Regulations.</div>
+        <div class="news-date">JAN 15, 2025</div>
+      </div>
+      <div class="news-card">
+        <div class="news-cat">📅 Calendar</div>
+        <div class="news-title">Round 5 confirmed: Spa-Francorchamps on January 25th</div>
+        <div class="news-body">The next round heads to the legendary Belgian circuit. Race start confirmed at 21:00 CET.</div>
+        <div class="news-date">JAN 12, 2025</div>
+      </div>
+      <div class="news-card">
+        <div class="news-cat">🏅 Standings</div>
+        <div class="news-title">Rossi extends lead: +18 points over Bianchi after Suzuka</div>
+        <div class="news-body">The championship leader strengthens his position. The battle for second is wide open with three drivers within 7 points.</div>
+        <div class="news-date">JAN 18, 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">IGP<span>FUN</span></div>
+    <ul class="footer-links">
+      <li><a onclick="showPage('rules')">Regulations</a></li>
+      <li><a>Discord</a></li>
+      <li><a>iRacing League</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 IGPFUN — Super Formula Light</div>
+  </footer>
+</div>
+
+<!-- ===== NEWS ===== -->
+<div id="page-news" class="page">
+  <div class="page-inner">
+    <h1 class="page-title">News & Announcements</h1>
+    <div class="page-sub">LEAGUE UPDATES — SEASON 2025</div>
+    <div class="news-list">
+      <div class="news-item">
+        <div>
+          <div class="ni-cat">🏆 Race Report</div>
+          <div class="ni-title">Rossi dominates at Suzuka: flawless performance in Round 4</div>
+          <div class="ni-body">Marco Rossi takes his second win of the season. Bianchi second, Esposito third after a charge from sixth place.</div>
+        </div>
+        <div class="ni-date">JAN 18, 2025<br>21:45</div>
+      </div>
+      <div class="news-item">
+        <div>
+          <div class="ni-cat">🏅 Standings</div>
+          <div class="ni-title">Rossi extends championship lead: +18 points over Bianchi</div>
+          <div class="ni-body">After four rounds the leader consolidates his position. Three drivers are separated by just 7 points in the fight for second.</div>
+        </div>
+        <div class="ni-date">JAN 18, 2025<br>22:00</div>
+      </div>
+      <div class="news-item">
+        <div>
+          <div class="ni-cat">📅 Calendar</div>
+          <div class="ni-title">Round 5: Spa-Francorchamps confirmed for January 25th</div>
+          <div class="ni-body">The next round heads to the legendary Belgian circuit. Race start confirmed at 21:00 CET.</div>
+        </div>
+        <div class="ni-date">JAN 12, 2025</div>
+      </div>
+      <div class="news-item">
+        <div>
+          <div class="ni-cat">📋 Official Notice</div>
+          <div class="ni-title">Qualifying format update: Q1/Q2 from Round 5</div>
+          <div class="ni-body">Q1 (10 min) open to all drivers, top 8 advance to Q2 (8 min). Full details available in the Regulations section.</div>
+        </div>
+        <div class="ni-date">JAN 15, 2025</div>
+      </div>
+      <div class="news-item">
+        <div>
+          <div class="ni-cat">🏆 Race Report</div>
+          <div class="ni-title">Round 3 — Monza: Esposito snatches victory on the final lap</div>
+          <div class="ni-body">A thrilling race at the Temple of Speed. Esposito overtakes Bianchi at the final corner on the last lap to claim a dramatic win.</div>
+        </div>
+        <div class="ni-date">JAN 4, 2025</div>
+      </div>
+      <div class="news-item">
+        <div>
+          <div class="ni-cat">📋 Official Notice</div>
+          <div class="ni-title">Welcome to Season 2025 — Regulations now live</div>
+          <div class="ni-body">The new season is officially open. The full regulations are available in the dedicated section. Registration open until December 10th.</div>
+        </div>
+        <div class="ni-date">DEC 1, 2024</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CALENDAR ===== -->
+<div id="page-calendar" class="page">
+  <div class="page-inner">
+    <h1 class="page-title">Race Calendar</h1>
+    <div class="page-sub">SUPER FORMULA LIGHT — 10 ROUNDS — iRACING — SEASON 2025</div>
+    <div class="calendar-grid">
+      <div class="race-row completed">
+        <div class="round-num">01</div>
+        <div class="race-info">
+          <div class="race-track">🇯🇵 Fuji Speedway</div>
+          <div class="race-country">Japan</div>
+        </div>
+        <div class="race-date-col">DEC 14, 2024<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="winner-label">winner</div><div class="winner-name">🏆 M. Rossi</div></div>
+      </div>
+      <div class="race-row completed">
+        <div class="round-num">02</div>
+        <div class="race-info">
+          <div class="race-track">🇮🇹 Autodromo Enzo e Dino Ferrari</div>
+          <div class="race-country">Imola, Italy</div>
+        </div>
+        <div class="race-date-col">DEC 21, 2024<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="winner-label">winner</div><div class="winner-name">🏆 L. Bianchi</div></div>
+      </div>
+      <div class="race-row completed">
+        <div class="round-num">03</div>
+        <div class="race-info">
+          <div class="race-track">🇮🇹 Autodromo Nazionale Monza</div>
+          <div class="race-country">Monza, Italy</div>
+        </div>
+        <div class="race-date-col">JAN 4, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="winner-label">winner</div><div class="winner-name">🏆 A. Esposito</div></div>
+      </div>
+      <div class="race-row completed">
+        <div class="round-num">04</div>
+        <div class="race-info">
+          <div class="race-track">🇯🇵 Suzuka Circuit</div>
+          <div class="race-country">Japan</div>
+        </div>
+        <div class="race-date-col">JAN 18, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="winner-label">winner</div><div class="winner-name">🏆 M. Rossi</div></div>
+      </div>
+      <div class="race-row next">
+        <div class="round-num">05</div>
+        <div class="race-info">
+          <div class="race-track"><span class="next-badge"></span>🇧🇪 Circuit de Spa-Francorchamps</div>
+          <div class="race-country">Belgium</div>
+        </div>
+        <div class="race-date-col">JAN 25, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="tbd">— TBD —</div></div>
+      </div>
+      <div class="race-row">
+        <div class="round-num">06</div>
+        <div class="race-info">
+          <div class="race-track">🇺🇸 Road Atlanta</div>
+          <div class="race-country">Georgia, USA</div>
+        </div>
+        <div class="race-date-col">FEB 8, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="tbd">— TBD —</div></div>
+      </div>
+      <div class="race-row">
+        <div class="round-num">07</div>
+        <div class="race-info">
+          <div class="race-track">🇩🇪 Nürburgring</div>
+          <div class="race-country">Germany</div>
+        </div>
+        <div class="race-date-col">FEB 22, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="tbd">— TBD —</div></div>
+      </div>
+      <div class="race-row">
+        <div class="round-num">08</div>
+        <div class="race-info">
+          <div class="race-track">🇬🇧 Silverstone Circuit</div>
+          <div class="race-country">Great Britain</div>
+        </div>
+        <div class="race-date-col">MAR 8, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="tbd">— TBD —</div></div>
+      </div>
+      <div class="race-row">
+        <div class="round-num">09</div>
+        <div class="race-info">
+          <div class="race-track">🇦🇺 Mount Panorama</div>
+          <div class="race-country">Bathurst, Australia</div>
+        </div>
+        <div class="race-date-col">MAR 22, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="tbd">— TBD —</div></div>
+      </div>
+      <div class="race-row">
+        <div class="round-num">10</div>
+        <div class="race-info">
+          <div class="race-track">🇯🇵 Autopolis</div>
+          <div class="race-country">Japan — Season Finale</div>
+        </div>
+        <div class="race-date-col">APR 5, 2025<br><span class="race-time">21:00 CET</span></div>
+        <div class="race-winner"><div class="tbd">— Grand Final —</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STANDINGS ===== -->
+<div id="page-standings" class="page">
+  <div class="page-inner">
+    <h1 class="page-title">Standings</h1>
+    <div class="page-sub">AFTER ROUND 4 — SUZUKA CIRCUIT</div>
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('piloti', this)">Drivers Championship</div>
+      <div class="tab" onclick="showTab('risultati', this)">Results by Round</div>
+    </div>
+    <div id="tab-piloti" class="tab-content active">
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>Pos</th><th>#</th><th>Driver</th><th>Races</th><th>Wins</th><th>Podiums</th><th style="text-align:right">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td><div class="pos-num p1">1</div></td>
+            <td><span class="driver-num">#1</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Marco Rossi</div><div class="driver-nat">Italy</div></td>
+            <td>4</td><td>2</td><td>4</td>
+            <td><div class="points">101<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="pos-num p2">2</div></td>
+            <td><span class="driver-num">#7</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Luca Bianchi</div><div class="driver-nat">Italy</div></td>
+            <td>4</td><td>1</td><td>3</td>
+            <td><div class="points">83<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="pos-num p3">3</div></td>
+            <td><span class="driver-num">#14</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Andrea Esposito</div><div class="driver-nat">Italy</div></td>
+            <td>4</td><td>1</td><td>3</td>
+            <td><div class="points">79<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="pos-num">4</div></td>
+            <td><span class="driver-num">#22</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Davide Ferrari</div><div class="driver-nat">Italy</div></td>
+            <td>4</td><td>0</td><td>1</td>
+            <td><div class="points">61<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="pos-num">5</div></td>
+            <td><span class="driver-num">#5</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Stefano Ricci</div><div class="driver-nat">Italy</div></td>
+            <td>4</td><td>0</td><td>0</td>
+            <td><div class="points">54<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="pos-num">6</div></td>
+            <td><span class="driver-num">#33</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Giovanni Conti</div><div class="driver-nat">Italy</div></td>
+            <td>4</td><td>0</td><td>0</td>
+            <td><div class="points">47<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="pos-num">7</div></td>
+            <td><span class="driver-num">#9</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Paolo Martini</div><div class="driver-nat">Italy</div></td>
+            <td>4</td><td>0</td><td>0</td>
+            <td><div class="points">39<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="pos-num">8</div></td>
+            <td><span class="driver-num">#18</span></td>
+            <td><div class="driver-name"><span class="flag">🇮🇹</span> Roberto Greco</div><div class="driver-nat">Italy</div></td>
+            <td>3</td><td>0</td><td>0</td>
+            <td><div class="points">28<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="tab-risultati" class="tab-content">
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>Driver</th><th>R1 Fuji</th><th>R2 Imola</th><th>R3 Monza</th><th>R4 Suzuka</th><th style="text-align:right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td><div class="driver-name">M. Rossi</div></td>
+            <td><div class="race-pts"><span class="rp win">25</span></div></td>
+            <td><div class="race-pts"><span class="rp">18</span></div></td>
+            <td><div class="race-pts"><span class="rp">18</span></div></td>
+            <td><div class="race-pts"><span class="rp win">25+1</span></div></td>
+            <td><div class="points">101<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="driver-name">L. Bianchi</div></td>
+            <td><div class="race-pts"><span class="rp">18</span></div></td>
+            <td><div class="race-pts"><span class="rp win">25</span></div></td>
+            <td><div class="race-pts"><span class="rp">15</span></div></td>
+            <td><div class="race-pts"><span class="rp">18</span></div></td>
+            <td><div class="points">83<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="driver-name">A. Esposito</div></td>
+            <td><div class="race-pts"><span class="rp">15</span></div></td>
+            <td><div class="race-pts"><span class="rp">15</span></div></td>
+            <td><div class="race-pts"><span class="rp win">25+1</span></div></td>
+            <td><div class="race-pts"><span class="rp">15</span></div></td>
+            <td><div class="points">79<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="driver-name">D. Ferrari</div></td>
+            <td><div class="race-pts"><span class="rp">12</span></div></td>
+            <td><div class="race-pts"><span class="rp">12</span></div></td>
+            <td><div class="race-pts"><span class="rp">12</span></div></td>
+            <td><div class="race-pts"><span class="rp">12</span></div></td>
+            <td><div class="points">61<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="driver-name">S. Ricci</div></td>
+            <td><div class="race-pts"><span class="rp">10</span></div></td>
+            <td><div class="race-pts"><span class="rp">10</span></div></td>
+            <td><div class="race-pts"><span class="rp">10</span></div></td>
+            <td><div class="race-pts"><span class="rp">10</span></div></td>
+            <td><div class="points">54<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+          <tr>
+            <td><div class="driver-name">G. Conti</div></td>
+            <td><div class="race-pts"><span class="rp">8</span></div></td>
+            <td><div class="race-pts"><span class="rp">8</span></div></td>
+            <td><div class="race-pts"><span class="rp">8</span></div></td>
+            <td><div class="race-pts"><span class="rp">8</span></div></td>
+            <td><div class="points">47<br><span class="pts-label">PTS</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:1rem; font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--grey); letter-spacing:0.1em;">
+        +1 = FASTEST LAP POINT &nbsp;|&nbsp; DNF = DID NOT FINISH &nbsp;|&nbsp; DSQ = DISQUALIFIED
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DRIVERS ===== -->
+<div id="page-drivers" class="page">
+  <div class="page-inner">
+    <h1 class="page-title">Drivers</h1>
+    <div class="page-sub">SEASON 2025 — 16 REGISTERED</div>
+    <div class="drivers-grid">
+      <div class="driver-card">
+        <div class="driver-card-num">1</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Marco<br>Rossi</div>
+        <div class="driver-card-team">Car #1</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val" style="color:var(--gold)">101</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">2</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">4</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-card-num">7</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Luca<br>Bianchi</div>
+        <div class="driver-card-team">Car #7</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val" style="color:var(--silver)">83</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">1</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">3</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-card-num">14</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Andrea<br>Esposito</div>
+        <div class="driver-card-team">Car #14</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val" style="color:var(--bronze)">79</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">1</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">3</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-card-num">22</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Davide<br>Ferrari</div>
+        <div class="driver-card-team">Car #22</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val">61</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">0</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">1</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-card-num">5</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Stefano<br>Ricci</div>
+        <div class="driver-card-team">Car #5</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val">54</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">0</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">0</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-card-num">33</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Giovanni<br>Conti</div>
+        <div class="driver-card-team">Car #33</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val">47</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">0</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">0</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-card-num">9</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Paolo<br>Martini</div>
+        <div class="driver-card-team">Car #9</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val">39</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">0</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">0</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+      <div class="driver-card">
+        <div class="driver-card-num">18</div>
+        <div class="driver-card-nat">🇮🇹</div>
+        <div class="driver-card-name">Roberto<br>Greco</div>
+        <div class="driver-card-team">Car #18</div>
+        <div class="driver-card-stats">
+          <div class="dcs"><div class="dcs-val">28</div><div class="dcs-label">Points</div></div>
+          <div class="dcs"><div class="dcs-val" style="color:var(--red)">0</div><div class="dcs-label">Wins</div></div>
+          <div class="dcs"><div class="dcs-val">0</div><div class="dcs-label">Podiums</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REGULATIONS ===== -->
+<div id="page-rules" class="page">
+  <div class="reg-layout">
+    <div class="reg-sidebar">
+      <div class="reg-sidebar-title">Sections</div>
+      <a class="reg-nav-item active" onclick="showRegSection('gen', this)">General Provisions</a>
+      <a class="reg-nav-item" onclick="showRegSection('iscr', this)">Registration</a>
+      <a class="reg-nav-item" onclick="showRegSection('format', this)">Race Format</a>
+      <a class="reg-nav-item" onclick="showRegSection('punti', this)">Points System</a>
+      <a class="reg-nav-item" onclick="showRegSection('condotta', this)">Code of Conduct</a>
+      <a class="reg-nav-item" onclick="showRegSection('penalita', this)">Penalties</a>
+      <a class="reg-nav-item" onclick="showRegSection('proteste', this)">Protests & Appeals</a>
+    </div>
+    <div class="reg-content">
+
+      <div id="reg-gen" class="reg-section active">
+        <div class="reg-title">General Provisions</div>
+        <div class="reg-version">VERSION 1.2 — UPDATED JANUARY 15, 2025</div>
+        <div class="reg-article">
+          <div class="art-num">ART. 1</div>
+          <div class="art-title">About the League</div>
+          <div class="art-body">
+            <p>IGPFun is an amateur sim racing league dedicated to the Super Formula Light category on the iRacing platform. The league aims to provide a competitive, respectful and enjoyable environment for all virtual motorsport enthusiasts.</p>
+            <p>Participation in the league implies full acceptance of these regulations and any subsequent amendments.</p>
+          </div>
+        </div>
+        <div class="reg-article">
+          <div class="art-num">ART. 2</div>
+          <div class="art-title">Administration</div>
+          <div class="art-body">
+            <p>The league is managed by a team of administrators who organise races, publish results, handle communications and enforce the regulations. All administrator decisions are binding and final, subject to the right of appeal set out in Art. 14.</p>
+          </div>
+        </div>
+        <div class="reg-article">
+          <div class="art-num">ART. 3</div>
+          <div class="art-title">Platform & Vehicle</div>
+          <div class="art-body">
+            <p>All league activity takes place exclusively on <strong>iRacing</strong>. The official vehicle for the 2025 season is the <strong>Super Formula Light</strong>. No vehicle setup modifications beyond those permitted by the iRacing platform are allowed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="reg-iscr" class="reg-section">
+        <div class="reg-title">Registration</div>
+        <div class="reg-version">VERSION 1.2 — UPDATED JANUARY 15, 2025</div>
+        <div class="reg-article">
+          <div class="art-num">ART. 4</div>
+          <div class="art-title">Eligibility</div>
+          <div class="art-body">
+            <p>Any driver with an active iRacing account may participate in the league. There are no iRating or Safety Rating restrictions, however drivers are expected to maintain a standard of driving consistent with the competitive and fair play spirit of the league.</p>
+            <p>Every driver must be a member of the official league Discord server and keep notifications active for the #announcements channel.</p>
+          </div>
+        </div>
+        <div class="reg-article">
+          <div class="art-num">ART. 5</div>
+          <div class="art-title">Race Number</div>
+          <div class="art-body">
+            <p>Each driver will select a unique race number upon registration. The number is reserved for the entire season. In the event of a conflict, priority is given to the driver who completed registration first.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="reg-format" class="reg-section">
+        <div class="reg-title">Race Format</div>
+        <div class="reg-version">VERSION 1.2 — UPDATED JANUARY 15, 2025</div>
+        <div class="reg-article">
+          <div class="art-num">ART. 6</div>
+          <div class="art-title">Weekend Structure</div>
+          <div class="art-body">
+            <p>Each league event takes place in a single evening session with the following format:</p>
+            <table class="rule-table">
+              <thead><tr><th>Session</th><th>Duration</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>Free Practice</td><td>20 min</td><td>Open to all drivers</td></tr>
+                <tr><td>Qualifying</td><td>15 min (Q1/Q2 from R5)</td><td>Flying lap format</td></tr>
+                <tr><td>Race</td><td>~40 min</td><td>Fixed distance per circuit</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="reg-article">
+          <div class="art-num">ART. 7</div>
+          <div class="art-title">Race Start</div>
+          <div class="art-body">
+            <p>The race begins with a Rolling Start behind iRacing's virtual safety car. Overtaking before the designated start line is prohibited. Jump starts will be penalised with a drive-through penalty.</p>
+          </div>
+        </div>
+        <div class="reg-article">
+          <div class="art-num">ART. 8</div>
+          <div class="art-title">Safety Car & Flags</div>
+          <div class="art-body">
+            <p>All iRacing virtual flags must be respected. Under a virtual safety car, all drivers must hold their position and must not overtake. Violations will be sanctioned by the stewards.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="reg-punti" class="reg-section">
+        <div class="reg-title">Points System</div>
+        <div class="reg-version">VERSION 1.2 — UPDATED JANUARY 15, 2025</div>
+        <div class="reg-article">
+          <div class="art-num">ART. 9</div>
+          <div class="art-title">Points Allocation</div>
+          <div class="art-body">
+            <table class="rule-table">
+              <thead><tr><th>Position</th><th>Points</th></tr></thead>
+              <tbody>
+                <tr><td>1st Place</td><td>25</td></tr>
+                <tr><td>2nd Place</td><td>18</td></tr>
+                <tr><td>3rd Place</td><td>15</td></tr>
+                <tr><td>4th Place</td><td>12</td></tr>
+                <tr><td>5th Place</td><td>10</td></tr>
+                <tr><td>6th Place</td><td>8</td></tr>
+                <tr><td>7th Place</td><td>6</td></tr>
+                <tr><td>8th Place</td><td>4</td></tr>
+                <tr><td>9th Place</td><td>2</td></tr>
+                <tr><td>10th Place</td><td>1</td></tr>
+                <tr><td>Fastest Lap (top 10 only)</td><td>+1</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="reg-article">
+          <div class="art-num">ART. 10</div>
+          <div class="art-title">Drop Score</div>
+          <div class="art-body">
+            <p>From Round 7 onwards, each driver may drop their single worst result from the final championship standings. This rule ensures that one isolated incident cannot compromise an entire season.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="reg-condotta" class="reg-section">
+        <div class="reg-title">Code of Conduct</div>
+        <div class="reg-version">VERSION 1.2 — UPDATED JANUARY 15, 2025</div>
+        <div class="reg-article">
+          <div class="art-num">ART. 11</div>
+          <div class="art-title">Fair Play</div>
+          <div class="art-body">
+            <p>Every driver is expected to race with respect for their opponents. Deliberate contact, intentional blocking, and unsportsmanlike behaviour — both on track and on the Discord server — are strictly prohibited.</p>
+            <p>The spirit of the league is to replicate professional motorsport competition: hard but fair racing on track, mutual respect off it.</p>
+          </div>
+        </div>
+        <div class="reg-article">
+          <div class="art-num">ART. 12</div>
+          <div class="art-title">Disconnections</div>
+          <div class="art-body">
+            <p>In the event of an involuntary disconnection during the race, the driver may rejoin the session retaining their last known position. No position or points compensation will be awarded for technical issues.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="reg-penalita" class="reg-section">
+        <div class="reg-title">Penalties</div>
+        <div class="reg-version">VERSION 1.2 — UPDATED JANUARY 15, 2025</div>
+        <div class="reg-article">
+          <div class="art-num">ART. 13</div>
+          <div class="art-title">Penalty Scale</div>
+          <div class="art-body">
+            <table class="rule-table">
+              <thead><tr><th>Infringement</th><th>Penalty</th></tr></thead>
+              <tbody>
+                <tr><td>Corner cutting with advantage gained</td><td>5s time penalty</td></tr>
+                <tr><td>Jump start</td><td>Drive-through</td></tr>
+                <tr><td>Involuntary contact</td><td>Warning / 10s penalty</td></tr>
+                <tr><td>Deliberate contact</td><td>DSQ + 1 race ban</td></tr>
+                <tr><td>Unsportsmanlike behaviour</td><td>Warning / Suspension</td></tr>
+                <tr><td>Repeat offence</td><td>Suspension / Expulsion</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="reg-proteste" class="reg-section">
+        <div class="reg-title">Protests & Appeals</div>
+        <div class="reg-version">VERSION 1.2 — UPDATED JANUARY 15, 2025</div>
+        <div class="reg-article">
+          <div class="art-num">ART. 14</div>
+          <div class="art-title">Protest Procedure</div>
+          <div class="art-body">
+            <p>Every driver has the right to submit a protest within <strong>24 hours</strong> of the end of the race. Protests must be submitted through the #protests channel on the Discord server and must include:</p>
+            <p>1. Race number and name of the driver involved<br>
+            2. Lap number and corner of the incident<br>
+            3. Video footage or screenshots of the incident<br>
+            4. A written description of what occurred</p>
+            <p>The stewards panel will issue a decision within 48 hours. The decision is final unless new evidence is presented.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.getElementById('nav-' + page).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function showTab(tab, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function showRegSection(sec, el) {
+    document.querySelectorAll('.reg-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.reg-nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('reg-' + sec).classList.add('active');
+    el.classList.add('active');
+  }
+</script>
+</body>
+</html>
