@@ -1,0 +1,153 @@
+{
+  "version": "1.2",
+  "updated": "January 15, 2025",
+  "sections": [
+    {
+      "id": "gen",
+      "title": "General Provisions",
+      "articles": [
+        {
+          "number": "ART. 1",
+          "title": "About the League",
+          "content": "IGPFun is an amateur sim racing league dedicated to the Super Formula Light category on the iRacing platform. The league aims to provide a competitive, respectful and enjoyable environment for all virtual motorsport enthusiasts.\n\nParticipation in the league implies full acceptance of these regulations and any subsequent amendments."
+        },
+        {
+          "number": "ART. 2",
+          "title": "Administration",
+          "content": "The league is managed by a team of administrators who organise races, publish results, handle communications and enforce the regulations. All administrator decisions are binding and final, subject to the right of appeal set out in Art. 14."
+        },
+        {
+          "number": "ART. 3",
+          "title": "Platform & Vehicle",
+          "content": "All league activity takes place exclusively on iRacing. The official vehicle for the 2025 season is the Super Formula Light. No vehicle setup modifications beyond those permitted by the iRacing platform are allowed."
+        }
+      ]
+    },
+    {
+      "id": "iscr",
+      "title": "Registration",
+      "articles": [
+        {
+          "number": "ART. 4",
+          "title": "Eligibility",
+          "content": "Any driver with an active iRacing account may participate in the league. There are no iRating or Safety Rating restrictions, however drivers are expected to maintain a standard of driving consistent with the competitive and fair play spirit of the league.\n\nEvery driver must be a member of the official league Discord server and keep notifications active for the #announcements channel."
+        },
+        {
+          "number": "ART. 5",
+          "title": "Race Number",
+          "content": "Each driver will select a unique race number upon registration. The number is reserved for the entire season. In the event of a conflict, priority is given to the driver who completed registration first."
+        }
+      ]
+    },
+    {
+      "id": "format",
+      "title": "Race Format",
+      "articles": [
+        {
+          "number": "ART. 6",
+          "title": "Weekend Structure",
+          "content": "Each league event takes place in a single evening session.",
+          "table": {
+            "headers": ["Session", "Duration", "Notes"],
+            "rows": [
+              ["Free Practice", "20 min", "Open to all drivers"],
+              ["Qualifying", "15 min (Q1/Q2 from R5)", "Flying lap format"],
+              ["Race", "~40 min", "Fixed distance per circuit"]
+            ]
+          }
+        },
+        {
+          "number": "ART. 7",
+          "title": "Race Start",
+          "content": "The race begins with a Rolling Start behind iRacing's virtual safety car. Overtaking before the designated start line is prohibited. Jump starts will be penalised with a drive-through penalty."
+        },
+        {
+          "number": "ART. 8",
+          "title": "Safety Car & Flags",
+          "content": "All iRacing virtual flags must be respected. Under a virtual safety car, all drivers must hold their position and must not overtake. Violations will be sanctioned by the stewards."
+        }
+      ]
+    },
+    {
+      "id": "punti",
+      "title": "Points System",
+      "articles": [
+        {
+          "number": "ART. 9",
+          "title": "Points Allocation",
+          "content": "Championship points are awarded as follows:",
+          "table": {
+            "headers": ["Position", "Points"],
+            "rows": [
+              ["1st Place", "25"],
+              ["2nd Place", "18"],
+              ["3rd Place", "15"],
+              ["4th Place", "12"],
+              ["5th Place", "10"],
+              ["6th Place", "8"],
+              ["7th Place", "6"],
+              ["8th Place", "4"],
+              ["9th Place", "2"],
+              ["10th Place", "1"],
+              ["Fastest Lap (top 10 only)", "+1"]
+            ]
+          }
+        },
+        {
+          "number": "ART. 10",
+          "title": "Drop Score",
+          "content": "From Round 7 onwards, each driver may drop their single worst result from the final championship standings. This rule ensures that one isolated incident cannot compromise an entire season."
+        }
+      ]
+    },
+    {
+      "id": "condotta",
+      "title": "Code of Conduct",
+      "articles": [
+        {
+          "number": "ART. 11",
+          "title": "Fair Play",
+          "content": "Every driver is expected to race with respect for their opponents. Deliberate contact, intentional blocking, and unsportsmanlike behaviour — both on track and on the Discord server — are strictly prohibited.\n\nThe spirit of the league is to replicate professional motorsport competition: hard but fair racing on track, mutual respect off it."
+        },
+        {
+          "number": "ART. 12",
+          "title": "Disconnections",
+          "content": "In the event of an involuntary disconnection during the race, the driver may rejoin the session retaining their last known position. No position or points compensation will be awarded for technical issues."
+        }
+      ]
+    },
+    {
+      "id": "penalita",
+      "title": "Penalties",
+      "articles": [
+        {
+          "number": "ART. 13",
+          "title": "Penalty Scale",
+          "content": "The following penalty scale applies:",
+          "table": {
+            "headers": ["Infringement", "Penalty"],
+            "rows": [
+              ["Corner cutting with advantage gained", "5s time penalty"],
+              ["Jump start", "Drive-through"],
+              ["Involuntary contact", "Warning / 10s penalty"],
+              ["Deliberate contact", "DSQ + 1 race ban"],
+              ["Unsportsmanlike behaviour", "Warning / Suspension"],
+              ["Repeat offence", "Suspension / Expulsion"]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "proteste",
+      "title": "Protests & Appeals",
+      "articles": [
+        {
+          "number": "ART. 14",
+          "title": "Protest Procedure",
+          "content": "Every driver has the right to submit a protest within 24 hours of the end of the race. Protests must be submitted through the #protests channel on the Discord server and must include:\n\n1. Race number and name of the driver involved\n2. Lap number and corner of the incident\n3. Video footage or screenshots of the incident\n4. A written description of what occurred\n\nThe stewards panel will issue a decision within 48 hours. The decision is final unless new evidence is presented."
+        }
+      ]
+    }
+  ]
+}

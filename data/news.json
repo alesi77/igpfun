@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "date": "JAN 18, 2025",
+    "time": "21:45",
+    "category": "Race Report",
+    "emoji": "🏆",
+    "title": "Rossi dominates at Suzuka: flawless performance in Round 4",
+    "body": "Marco Rossi takes his second win of the season with an impeccable lights-to-flag drive from pole position. Bianchi finishes second while Esposito completes the podium after charging from sixth.",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "date": "JAN 18, 2025",
+    "time": "22:00",
+    "category": "Standings",
+    "emoji": "🏅",
+    "title": "Rossi extends championship lead: +18 points over Bianchi after Suzuka",
+    "body": "After four rounds the leader consolidates his position. Three drivers are separated by just 7 points in the fight for second.",
+    "featured": false
+  },
+  {
+    "id": 3,
+    "date": "JAN 15, 2025",
+    "time": "",
+    "category": "Official Notice",
+    "emoji": "📋",
+    "title": "Qualifying format update: Q1/Q2 from Round 5",
+    "body": "Q1 (10 min) open to all drivers, top 8 advance to Q2 (8 min). Full details available in the Regulations section.",
+    "featured": false
+  },
+  {
+    "id": 4,
+    "date": "JAN 12, 2025",
+    "time": "",
+    "category": "Calendar",
+    "emoji": "📅",
+    "title": "Round 5 confirmed: Spa-Francorchamps on January 25th",
+    "body": "The next round heads to the legendary Belgian circuit. Race start confirmed at 21:00 CET.",
+    "featured": false
+  },
+  {
+    "id": 5,
+    "date": "JAN 4, 2025",
+    "time": "",
+    "category": "Race Report",
+    "emoji": "🏆",
+    "title": "Round 3 — Monza: Esposito snatches victory on the final lap",
+    "body": "A thrilling race at the Temple of Speed. Esposito overtakes Bianchi at the final corner on the last lap to claim a dramatic win.",
+    "featured": false
+  },
+  {
+    "id": 6,
+    "date": "DEC 1, 2024",
+    "time": "",
+    "category": "Official Notice",
+    "emoji": "📋",
+    "title": "Welcome to Season 2025 — Regulations now live",
+    "body": "The new season is officially open. The full regulations are available in the dedicated section. Registration open until December 10th.",
+    "featured": false
+  }
+]
