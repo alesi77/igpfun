@@ -807,11 +807,11 @@
     /* horizontal fade on left (blends into text area) + vertical fade at top (hides JPEG sky artifacts) */
     -webkit-mask-image:
       linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, black 34%),
-      linear-gradient(to bottom, transparent 0%, transparent 12%, black 30%);
+      linear-gradient(to bottom, transparent 0%, black 6%);
     -webkit-mask-composite: source-in;
     mask-image:
       linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, black 34%),
-      linear-gradient(to bottom, transparent 0%, transparent 12%, black 30%);
+      linear-gradient(to bottom, transparent 0%, black 6%);
     mask-composite: intersect;
   }
   .hero-car-glow {
@@ -832,9 +832,9 @@
     opacity: 0;
     animation: fadeUp 0.9s 0.5s forwards;
     filter:
-      url(#remove-white)
       drop-shadow(0 30px 55px rgba(0,0,0,0.92))
-      saturate(1.08) brightness(1.0);
+      drop-shadow(0 16px 36px rgba(200,50,0,0.12))
+      saturate(1.1) brightness(1.02);
   }
 
   /* ANIMATIONS */
@@ -859,22 +859,6 @@
 </head>
 <body>
 
-<!-- SVG filter: makes white/near-white pixels transparent while preserving car colours -->
-<svg width="0" height="0" style="position:absolute;top:-9999px" aria-hidden="true">
-  <defs>
-    <filter id="remove-white" color-interpolation-filters="sRGB">
-      <!-- A' = 3 - R - G - B  →  white(1,1,1)→0, saturated colours→>=1 (clamped to 1) -->
-      <feColorMatrix type="matrix" values="1 0 0 0 0
-                                           0 1 0 0 0
-                                           0 0 1 0 0
-                                          -1 -1 -1 0 3"/>
-      <!-- gamma<1 boosts intermediate alpha, recovering white car parts while background stays transparent -->
-      <feComponentTransfer>
-        <feFuncA type="gamma" amplitude="1" exponent="0.45" offset="0"/>
-      </feComponentTransfer>
-    </filter>
-  </defs>
-</svg>
 
 <!-- NAV -->
 <nav>
