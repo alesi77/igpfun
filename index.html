@@ -7,223 +7,903 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #080808; --dark: #0f0f0f; --panel: #141414; --border: #1f1f1f;
-    --red: #e8001e; --red-dark: #a80015;
-    --neon: #00ffe0; --neon-dim: rgba(0,255,224,0.12); --neon-mid: rgba(0,255,224,0.35);
-    --white: #f0f0f0; --grey: #888; --grey-light: #bbb;
-    --gold: #ffd700; --silver: #c0c0c0; --bronze: #cd7f32;
+    --black: #080808;
+    --dark: #0f0f0f;
+    --panel: #141414;
+    --border: #1f1f1f;
+    --red: #e8001e;
+    --red-dark: #a80015;
+    --neon: #00ffe0;
+    --neon-dim: rgba(0,255,224,0.12);
+    --neon-mid: rgba(0,255,224,0.35);
+    --white: #f0f0f0;
+    --grey: #888;
+    --grey-light: #bbb;
+    --gold: #ffd700;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--black); color:var(--white); font-family:'Barlow',sans-serif; font-weight:400; overflow-x:hidden; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
   body::before {
-    content:''; position:fixed; inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events:none; z-index:9999; opacity:0.4;
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
   }
 
   /* NAV */
-  nav { position:fixed; top:0; left:0; right:0; z-index:1000; background:rgba(8,8,8,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 2.5rem; height:60px; }
-  .nav-logo { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.5rem; letter-spacing:0.08em; color:var(--white); text-transform:uppercase; cursor:pointer; }
-  .nav-logo span { color:var(--red); }
-  .nav-logo em { font-style:normal; color:var(--neon); font-size:0.65em; display:block; letter-spacing:0.25em; font-weight:600; line-height:1; margin-top:-2px; }
-  .nav-links { display:flex; gap:0.2rem; list-style:none; }
-  .nav-links a { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--grey); text-decoration:none; padding:0.4rem 0.9rem; border-radius:2px; transition:color 0.2s,background 0.2s; cursor:pointer; }
-  .nav-links a:hover,.nav-links a.active { color:var(--neon); background:var(--neon-dim); }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-logo em {
+    font-style: normal;
+    color: var(--neon);
+    font-size: 0.65em;
+    display: block;
+    letter-spacing: 0.25em;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: -2px;
+  }
+  .nav-links { display: flex; gap: 0.2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    transition: color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--neon); background: var(--neon-dim); }
 
   /* PAGES */
-  .page { display:none; padding-top:60px; min-height:100vh; }
-  .page.active { display:block; }
+  .page { display: none; padding-top: 60px; min-height: 100vh; }
+  .page.active { display: block; }
 
   /* HERO */
-  .hero { position:relative; height:calc(100vh - 60px); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:0 4rem; overflow:hidden; }
-  .hero-bg { position:absolute; inset:0; background: radial-gradient(ellipse 60% 70% at 70% 50%,rgba(232,0,30,0.08) 0%,transparent 60%), radial-gradient(ellipse 40% 40% at 85% 20%,rgba(0,255,224,0.05) 0%,transparent 50%), linear-gradient(180deg,#0f0f0f 0%,#080808 100%); }
-  .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 80%); }
-  .hero-accent { position:absolute; right:0; top:0; bottom:0; width:3px; background:linear-gradient(180deg,transparent,var(--red),var(--neon),transparent); opacity:0.6; }
-  .hero-tag { font-family:'Share Tech Mono',monospace; font-size:0.75rem; color:var(--neon); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:1.2rem; opacity:0; animation:fadeUp 0.6s 0.2s forwards; }
-  .hero-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(3.5rem,8vw,7rem); line-height:0.9; text-transform:uppercase; color:var(--white); opacity:0; animation:fadeUp 0.6s 0.4s forwards; }
-  .hero-title .red { color:var(--red); }
-  .hero-title .italic { font-style:italic; color:var(--grey-light); }
-  .hero-sub { font-size:1.05rem; color:var(--grey); margin-top:1.5rem; max-width:480px; line-height:1.6; font-weight:300; opacity:0; animation:fadeUp 0.6s 0.6s forwards; }
-  .hero-cta { margin-top:2.5rem; display:flex; gap:1rem; opacity:0; animation:fadeUp 0.6s 0.8s forwards; }
-  .btn-primary { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--black); background:var(--red); border:none; padding:0.75rem 2rem; cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:background 0.2s,transform 0.15s; }
-  .btn-primary:hover { background:#ff0022; transform:translateY(-2px); }
-  .btn-secondary { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:0.85rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--neon); background:transparent; border:1px solid var(--neon-mid); padding:0.75rem 2rem; cursor:pointer; clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition:background 0.2s,border-color 0.2s; }
-  .btn-secondary:hover { background:var(--neon-dim); border-color:var(--neon); }
-  .hero-stats { position:absolute; bottom:3rem; left:4rem; display:flex; gap:3rem; opacity:0; animation:fadeUp 0.6s 1s forwards; }
-  .stat-item { display:flex; flex-direction:column; }
-  .stat-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2.2rem; color:var(--white); line-height:1; }
-  .stat-num span { color:var(--red); }
-  .stat-label { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--grey); letter-spacing:0.2em; text-transform:uppercase; margin-top:0.3rem; }
+  .hero {
+    position: relative;
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 4rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: #000000;  /* TEST: pure black */
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 80%);
+  }
+  .hero-accent {
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, transparent, var(--red), var(--neon), transparent);
+    opacity: 0.6;
+  }
+  .hero-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--neon);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero-title .red { color: var(--red); }
+  .hero-title .italic { font-style: italic; color: var(--grey-light); }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--grey);
+    margin-top: 1.5rem;
+    max-width: 480px;
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.6s forwards;
+  }
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.8s forwards;
+  }
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--red);
+    border: none;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #ff0022; transform: translateY(-2px); }
+  .btn-secondary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon);
+    background: transparent;
+    border: 1px solid var(--neon-mid);
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { background: var(--neon-dim); border-color: var(--neon); }
+  .hero-stats {
+    position: absolute;
+    bottom: 3rem; left: 4rem;
+    display: flex;
+    gap: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 1s forwards;
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--red); }
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
 
-  /* SECTIONS */
-  .home-section { padding:4rem; border-top:1px solid var(--border); }
-  .section-header { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:2.5rem; }
-  .section-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.8rem; text-transform:uppercase; letter-spacing:0.05em; }
-  .section-line { flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
-  .section-tag { font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--neon); letter-spacing:0.2em; }
+  /* HOME SECTIONS */
+  .home-section { padding: 4rem; border-top: 1px solid var(--border); }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+  }
 
-  /* NEWS GRID (home) */
-  .news-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:1px; background:var(--border); }
-  .news-card { background:var(--panel); padding:2rem; cursor:pointer; transition:background 0.2s; position:relative; overflow:hidden; }
-  .news-card:hover { background:#1a1a1a; }
-  .news-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--red); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
-  .news-card:hover::before { transform:scaleX(1); }
-  .news-card.featured { grid-row:span 2; }
-  .news-cat { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--red); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.8rem; }
-  .news-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.3rem; line-height:1.2; margin-bottom:0.8rem; }
-  .news-card.featured .news-title { font-size:1.9rem; }
-  .news-body { font-size:0.85rem; color:var(--grey); line-height:1.6; font-weight:300; }
-  .news-date { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--grey); margin-top:1.5rem; letter-spacing:0.1em; }
+  /* NEWS GRID */
+  .news-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+  .news-card {
+    background: var(--panel);
+    padding: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .news-card:hover { background: #1a1a1a; }
+  .news-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .news-card:hover::before { transform: scaleX(1); }
+  .news-card.featured { grid-row: span 2; }
+  .news-cat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .news-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+  }
+  .news-card.featured .news-title { font-size: 1.9rem; }
+  .news-body { font-size: 0.85rem; color: var(--grey); line-height: 1.6; font-weight: 300; }
+  .news-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    margin-top: 1.5rem;
+    letter-spacing: 0.1em;
+  }
 
   /* PAGE INNER */
-  .page-inner { padding:3rem 4rem; }
-  .page-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:3rem; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; }
-  .page-sub { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--neon); letter-spacing:0.2em; margin-bottom:3rem; }
+  .page-inner { padding: 3rem 4rem; }
+  .page-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .page-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    margin-bottom: 3rem;
+  }
 
   /* TABS */
-  .tabs { display:flex; margin-bottom:2rem; border-bottom:1px solid var(--border); }
-  .tab { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--grey); padding:0.75rem 1.8rem; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:color 0.2s,border-color 0.2s; }
-  .tab:hover { color:var(--white); }
-  .tab.active { color:var(--neon); border-bottom-color:var(--neon); }
-  .tab-content { display:none; }
-  .tab-content.active { display:block; }
+  .tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    padding: 0.75rem 1.8rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab:hover { color: var(--white); }
+  .tab.active { color: var(--neon); border-bottom-color: var(--neon); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
 
   /* STANDINGS TABLE */
-  .standings-table { width:100%; border-collapse:collapse; }
-  .standings-table thead tr { border-bottom:1px solid var(--border); }
-  .standings-table th { font-family:'Share Tech Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; color:var(--grey); text-transform:uppercase; padding:0.75rem 1rem; text-align:left; font-weight:400; }
-  .standings-table th:last-child { text-align:right; }
-  .standings-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.03); transition:background 0.15s; }
-  .standings-table tbody tr:hover { background:rgba(255,255,255,0.03); }
-  .standings-table td { padding:1rem; font-size:0.92rem; }
-  .pos-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.4rem; color:var(--grey); width:50px; }
-  .pos-num.p1 { color:var(--gold); } .pos-num.p2 { color:var(--silver); } .pos-num.p3 { color:var(--bronze); }
-  .driver-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.05rem; letter-spacing:0.03em; }
-  .driver-nat { font-size:0.75rem; color:var(--grey); font-weight:300; }
-  .driver-num { font-family:'Share Tech Mono',monospace; font-size:0.8rem; color:var(--red); background:rgba(232,0,30,0.1); padding:0.15rem 0.5rem; border-radius:2px; display:inline-block; }
-  .points { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.6rem; color:var(--white); text-align:right; }
-  .pts-label { font-family:'Share Tech Mono',monospace; font-size:0.6rem; color:var(--grey); letter-spacing:0.15em; }
-  .flag { font-size:1.1rem; margin-right:0.4rem; }
-  .race-pts { display:flex; gap:4px; flex-wrap:wrap; }
-  .rp { font-family:'Share Tech Mono',monospace; font-size:0.65rem; padding:2px 6px; background:var(--border); border-radius:2px; color:var(--grey-light); }
-  .rp.win { background:rgba(232,0,30,0.2); color:var(--red); }
-  .highlight-row { background:rgba(255,215,0,0.03) !important; }
-  .table-note { margin-top:1rem; font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--grey); letter-spacing:0.1em; }
+  .standings-table { width: 100%; border-collapse: collapse; }
+  .standings-table thead tr { border-bottom: 1px solid var(--border); }
+  .standings-table th {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 400;
+  }
+  .standings-table th:last-child { text-align: right; }
+  .standings-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    transition: background 0.15s;
+  }
+  .standings-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+  .standings-table td { padding: 1rem 1rem; font-size: 0.92rem; }
+  .pos-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--grey);
+    width: 50px;
+  }
+  .pos-num.p1 { color: var(--gold); }
+  .pos-num.p2 { color: var(--silver); }
+  .pos-num.p3 { color: var(--bronze); }
+  .driver-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+  }
+  .driver-nat { font-size: 0.75rem; color: var(--grey); font-weight: 300; }
+  .driver-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--red);
+    background: rgba(232,0,30,0.1);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .points {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--white);
+    text-align: right;
+  }
+  .pts-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+  }
+  .flag { font-size: 1.1rem; margin-right: 0.4rem; }
+  .race-pts { display: flex; gap: 4px; flex-wrap: wrap; }
+  .rp {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    background: var(--border);
+    border-radius: 2px;
+    color: var(--grey-light);
+  }
+  .rp.win { background: rgba(232,0,30,0.2); color: var(--red); }
+  .highlight-row { background: rgba(255,215,0,0.03) !important; }
 
   /* CALENDAR */
-  .calendar-grid { display:grid; grid-template-columns:1fr; gap:1px; background:var(--border); }
-  .race-row { background:var(--panel); display:grid; grid-template-columns:80px 1fr 200px 160px; align-items:center; padding:1.5rem 2rem; gap:2rem; transition:background 0.15s; cursor:pointer; position:relative; }
-  .race-row:hover { background:#1a1a1a; }
-  .race-row.completed { opacity:0.6; }
-  .race-row.next { border-left:3px solid var(--neon); opacity:1; }
-  .race-row.next::after { content:'NEXT RACE'; position:absolute; right:2rem; top:50%; transform:translateY(-50%); font-family:'Share Tech Mono',monospace; font-size:0.6rem; color:var(--neon); letter-spacing:0.2em; background:var(--neon-dim); padding:0.3rem 0.8rem; border:1px solid var(--neon-mid); border-radius:2px; }
-  .round-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2.5rem; color:var(--border); line-height:1; }
-  .race-row.next .round-num { color:rgba(0,255,224,0.2); }
-  .race-row.completed .round-num { color:#222; }
-  .race-track { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.2rem; letter-spacing:0.03em; margin-bottom:0.2rem; }
-  .race-country { font-size:0.8rem; color:var(--grey); font-weight:300; }
-  .race-date-col { font-family:'Share Tech Mono',monospace; font-size:0.8rem; color:var(--grey-light); letter-spacing:0.05em; }
-  .race-time { font-size:0.7rem; color:var(--grey); margin-top:0.3rem; }
-  .race-winner { display:flex; flex-direction:column; align-items:flex-end; }
-  .winner-label { font-family:'Share Tech Mono',monospace; font-size:0.6rem; color:var(--grey); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.3rem; }
-  .winner-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:var(--gold); }
-  .tbd { font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--grey); letter-spacing:0.1em; }
-  @keyframes pulse-neon { 0%,100%{box-shadow:0 0 8px rgba(0,255,224,0.4);}50%{box-shadow:0 0 20px rgba(0,255,224,0.8);} }
-  .next-badge { display:inline-block; width:8px; height:8px; background:var(--neon); border-radius:50%; animation:pulse-neon 1.8s ease-in-out infinite; margin-right:0.5rem; vertical-align:middle; }
+  .calendar-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); }
+  .race-row {
+    background: var(--panel);
+    display: grid;
+    grid-template-columns: 80px 1fr 200px 160px;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 2rem;
+    transition: background 0.15s;
+    cursor: pointer;
+    position: relative;
+  }
+  .race-row:hover { background: #1a1a1a; }
+  .race-row.completed { opacity: 0.6; }
+  .race-row.next { border-left: 3px solid var(--neon); opacity: 1; }
+  .race-row.next::after {
+    content: 'NEXT RACE';
+    position: absolute;
+    right: 2rem; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    background: var(--neon-dim);
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--neon-mid);
+    border-radius: 2px;
+  }
+  .round-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: var(--border);
+    line-height: 1;
+  }
+  .race-row.next .round-num { color: rgba(0,255,224,0.2); }
+  .race-row.completed .round-num { color: #222; }
+  .race-track {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.2rem;
+  }
+  .race-country { font-size: 0.8rem; color: var(--grey); font-weight: 300; }
+  .race-briefing-hint {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--neon);
+    letter-spacing: 0.15em;
+    margin-top: 0.35rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .race-row:hover .race-briefing-hint { opacity: 1; }
+  .race-date-col {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--grey-light);
+    letter-spacing: 0.05em;
+  }
+  .race-time { font-size: 0.7rem; color: var(--grey); margin-top: 0.3rem; }
+  .race-winner { display: flex; flex-direction: column; align-items: flex-end; }
+  .winner-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .winner-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gold);
+  }
+  .tbd { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--grey); letter-spacing: 0.1em; }
 
   /* DRIVERS */
-  .drivers-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; background:var(--border); }
-  .driver-card { background:var(--panel); padding:2rem; cursor:pointer; transition:background 0.2s; position:relative; overflow:hidden; }
-  .driver-card:hover { background:#1c1c1c; }
-  .driver-card-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-style:italic; font-size:5rem; color:rgba(255,255,255,0.04); position:absolute; right:1rem; top:0.5rem; line-height:1; pointer-events:none; transition:color 0.2s; }
-  .driver-card:hover .driver-card-num { color:rgba(232,0,30,0.08); }
-  .driver-card-nat { font-size:1.4rem; margin-bottom:0.8rem; }
-  .driver-card-name { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.5rem; text-transform:uppercase; line-height:1.1; margin-bottom:0.3rem; }
-  .driver-card-team { font-size:0.8rem; color:var(--grey); margin-bottom:1.5rem; font-weight:300; }
-  .driver-card-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.5rem; border-top:1px solid var(--border); padding-top:1.2rem; }
-  .dcs { display:flex; flex-direction:column; align-items:center; }
-  .dcs-val { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.3rem; }
-  .dcs-label { font-family:'Share Tech Mono',monospace; font-size:0.55rem; color:var(--grey); letter-spacing:0.15em; text-align:center; }
+  .drivers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+  .driver-card {
+    background: var(--panel);
+    padding: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .driver-card:hover { background: #1c1c1c; }
+  .driver-card-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 5rem;
+    color: rgba(255,255,255,0.04);
+    position: absolute;
+    right: 1rem; top: 0.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+  .driver-card:hover .driver-card-num { color: rgba(232,0,30,0.08); }
+  .driver-card-nat { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .driver-card-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+  }
+  .driver-card-team { font-size: 0.8rem; color: var(--grey); margin-bottom: 1.5rem; font-weight: 300; }
+  .driver-card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.2rem;
+  }
+  .dcs { display: flex; flex-direction: column; align-items: center; }
+  .dcs-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.3rem; }
+  .dcs-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+    text-align: center;
+  }
 
   /* REGULATIONS */
-  .reg-layout { display:grid; grid-template-columns:240px 1fr; min-height:calc(100vh - 60px); }
-  .reg-sidebar { border-right:1px solid var(--border); padding:2rem 0; position:sticky; top:60px; height:calc(100vh - 60px); overflow-y:auto; }
-  .reg-sidebar-title { font-family:'Share Tech Mono',monospace; font-size:0.6rem; color:var(--grey); letter-spacing:0.2em; text-transform:uppercase; padding:0 1.5rem; margin-bottom:1rem; }
-  .reg-nav-item { display:block; font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:0.85rem; letter-spacing:0.05em; color:var(--grey); padding:0.6rem 1.5rem; cursor:pointer; transition:color 0.15s,background 0.15s; text-transform:uppercase; border-left:2px solid transparent; }
-  .reg-nav-item:hover { color:var(--white); background:rgba(255,255,255,0.02); }
-  .reg-nav-item.active { color:var(--neon); border-left-color:var(--neon); background:var(--neon-dim); }
-  .reg-content { padding:3rem 4rem; }
-  .reg-section { display:none; }
-  .reg-section.active { display:block; }
-  .reg-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2.2rem; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; }
-  .reg-version { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--neon); letter-spacing:0.2em; margin-bottom:2.5rem; }
-  .reg-article { margin-bottom:2.5rem; padding-bottom:2.5rem; border-bottom:1px solid var(--border); }
-  .reg-article:last-child { border-bottom:none; }
-  .art-num { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--red); letter-spacing:0.2em; margin-bottom:0.5rem; }
-  .art-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.2rem; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem; }
-  .art-body { font-size:0.9rem; color:var(--grey-light); line-height:1.75; font-weight:300; white-space:pre-line; }
-  .rule-table { width:100%; border-collapse:collapse; margin-top:1.2rem; }
-  .rule-table th { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--grey); letter-spacing:0.15em; text-transform:uppercase; padding:0.6rem 1rem; text-align:left; border-bottom:1px solid var(--border); font-weight:400; }
-  .rule-table td { padding:0.65rem 1rem; font-size:0.85rem; color:var(--grey-light); border-bottom:1px solid rgba(255,255,255,0.03); }
-  .rule-table td:first-child { font-family:'Barlow Condensed',sans-serif; font-weight:700; color:var(--white); font-size:1rem; }
+  .reg-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 60px);
+  }
+  .reg-sidebar {
+    border-right: 1px solid var(--border);
+    padding: 2rem 0;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  .reg-sidebar-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .reg-nav-item {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+    text-transform: uppercase;
+    border-left: 2px solid transparent;
+  }
+  .reg-nav-item:hover { color: var(--white); background: rgba(255,255,255,0.02); }
+  .reg-nav-item.active { color: var(--neon); border-left-color: var(--neon); background: var(--neon-dim); }
+  .reg-content { padding: 3rem 4rem; }
+  .reg-section { display: none; }
+  .reg-section.active { display: block; }
+  .reg-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+  .reg-version {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    margin-bottom: 2.5rem;
+  }
+  .reg-article { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+  .reg-article:last-child { border-bottom: none; }
+  .art-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+  }
+  .art-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .art-body { font-size: 0.9rem; color: var(--grey-light); line-height: 1.75; font-weight: 300; }
+  .art-body p { margin-bottom: 0.8rem; }
+  .rule-table { width: 100%; border-collapse: collapse; margin-top: 1.2rem; }
+  .rule-table th {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.6rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .rule-table td {
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    color: var(--grey-light);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .rule-table td:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    color: var(--white);
+    font-size: 1rem;
+  }
 
   /* NEWS LIST */
-  .news-list { display:grid; grid-template-columns:1fr; gap:1px; background:var(--border); }
-  .news-item { background:var(--panel); padding:2rem 2.5rem; display:grid; grid-template-columns:1fr 140px; gap:2rem; align-items:center; cursor:pointer; transition:background 0.15s; border-left:3px solid transparent; }
-  .news-item:hover { background:#1a1a1a; border-left-color:var(--red); }
-  .ni-cat { font-family:'Share Tech Mono',monospace; font-size:0.62rem; color:var(--red); letter-spacing:0.2em; margin-bottom:0.6rem; }
-  .ni-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.25rem; margin-bottom:0.5rem; line-height:1.2; }
-  .ni-body { font-size:0.82rem; color:var(--grey); line-height:1.6; font-weight:300; }
-  .ni-date { font-family:'Share Tech Mono',monospace; font-size:0.7rem; color:var(--grey); text-align:right; align-self:flex-start; letter-spacing:0.05em; }
+  .news-list { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--border); }
+  .news-item {
+    background: var(--panel);
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 140px;
+    gap: 2rem;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .news-item:hover { background: #1a1a1a; border-left-color: var(--red); }
+  .ni-cat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--red);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.6rem;
+  }
+  .ni-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .ni-body { font-size: 0.82rem; color: var(--grey); line-height: 1.6; font-weight: 300; }
+  .ni-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--grey);
+    text-align: right;
+    align-self: flex-start;
+    letter-spacing: 0.05em;
+  }
 
   /* FOOTER */
-  footer { border-top:1px solid var(--border); padding:2.5rem 4rem; display:flex; justify-content:space-between; align-items:center; margin-top:4rem; }
-  .footer-logo { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.1rem; letter-spacing:0.08em; color:var(--grey); }
-  .footer-logo span { color:var(--red); }
-  .footer-copy { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--grey); letter-spacing:0.1em; }
-  .footer-links { display:flex; gap:1.5rem; list-style:none; }
-  .footer-links a { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--grey); text-decoration:none; letter-spacing:0.1em; transition:color 0.2s; cursor:pointer; }
-  .footer-links a:hover { color:var(--neon); }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4rem;
+  }
+  .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 0.08em; color: var(--grey); }
+  .footer-logo span { color: var(--red); }
+  .footer-copy { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--grey); letter-spacing: 0.1em; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--grey); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; cursor: pointer; }
+  .footer-links a:hover { color: var(--neon); }
 
-  @keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+  /* BRIEFING PAGE */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    margin-bottom: 2.5rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .back-btn:hover { color: var(--neon); border-color: var(--neon); }
+  .briefing-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    max-width: 640px;
+    margin-bottom: 3rem;
+  }
+  .briefing-card {
+    background: var(--panel);
+    padding: 2rem 2.5rem;
+  }
+  .briefing-card-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--neon);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .briefing-card-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--white);
+    line-height: 1.1;
+  }
+  .briefing-card-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+  }
+  .track-map-section { margin-top: 0.5rem; }
+  .track-map-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .track-map-img {
+    max-width: 860px;
+    width: 100%;
+    border: 1px solid var(--border);
+    display: block;
+  }
+  .track-map-placeholder {
+    max-width: 860px;
+    width: 100%;
+    height: 320px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .track-map-placeholder .ph-icon {
+    font-size: 2.5rem;
+    opacity: 0.15;
+  }
+  .track-map-placeholder .ph-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    letter-spacing: 0.15em;
+    text-align: center;
+  }
 
-  /* LOADING */
-  .loading { font-family:'Share Tech Mono',monospace; font-size:0.75rem; color:var(--grey); letter-spacing:0.2em; padding:2rem; text-align:center; }
+  /* HERO CAR */
+  .hero-car-wrap {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 52%;
+    pointer-events: none;
+    overflow: hidden;
+    background: #060606;
+    /* horizontal fade on left (blends into text area) + vertical fade at top (hides JPEG sky artifacts) */
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, black 34%),
+      linear-gradient(to bottom, transparent 0%, black 22%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, black 34%),
+      linear-gradient(to bottom, transparent 0%, black 22%);
+    mask-composite: intersect;
+  }
+  .hero-car-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      /* ground-reflection glow — stays at the bottom behind the car underbody */
+      radial-gradient(ellipse 90% 35% at 50% 92%, rgba(232,0,30,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-car {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 15% center;     /* show cockpit/front-body, nose fades left */
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+    filter:
+      url(#remove-white)
+      drop-shadow(0 30px 55px rgba(0,0,0,0.92))
+      saturate(1.08) brightness(1.0);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-neon {
+    0%, 100% { box-shadow: 0 0 8px rgba(0,255,224,0.4); }
+    50% { box-shadow: 0 0 20px rgba(0,255,224,0.8); }
+  }
+  .next-badge {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--neon);
+    border-radius: 50%;
+    animation: pulse-neon 1.8s ease-in-out infinite;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
 </style>
 </head>
 <body>
 
+<!-- SVG filter: makes white/near-white pixels transparent while preserving car colours -->
+<svg width="0" height="0" style="position:absolute;top:-9999px" aria-hidden="true">
+  <defs>
+    <filter id="remove-white" color-interpolation-filters="sRGB">
+      <!-- A' = 3 - R - G - B  →  white(1,1,1)→0, saturated colours→>=1 (clamped to 1) -->
+      <feColorMatrix type="matrix" values="1 0 0 0 0
+                                           0 1 0 0 0
+                                           0 0 1 0 0
+                                          -1 -1 -1 0 3"/>
+      <!-- gamma<1 boosts intermediate alpha, recovering white car parts while background stays transparent -->
+      <feComponentTransfer>
+        <feFuncA type="gamma" amplitude="1" exponent="0.45" offset="0"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+</svg>
+
+<!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="showPage('home')">
     IGP<span>FUN</span>
-    <em id="nav-subtitle">Super Formula Light</em>
+    <em>Super Formula Light</em>
   </div>
   <ul class="nav-links">
-    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
-    <li><a onclick="showPage('news')" id="nav-news">News</a></li>
-    <li><a onclick="showPage('calendar')" id="nav-calendar">Calendar</a></li>
-    <li><a onclick="showPage('standings')" id="nav-standings">Standings</a></li>
-    <li><a onclick="showPage('drivers')" id="nav-drivers">Drivers</a></li>
-    <li><a onclick="showPage('rules')" id="nav-rules">Regulations</a></li>
+    <li><a onclick="showPage('home')"      id="nav-home"      class="active">Home</a></li>
+    <li><a onclick="showPage('news')"      id="nav-news"               >News</a></li>
+    <li><a onclick="showPage('calendar')"  id="nav-calendar"           >Calendar</a></li>
+    <li><a onclick="showPage('standings')" id="nav-standings"          >Standings</a></li>
+    <li><a onclick="showPage('drivers')"   id="nav-drivers"            >Drivers</a></li>
+    <li><a onclick="showPage('rules')"     id="nav-rules"              >Regulations</a></li>
   </ul>
 </nav>
 
-<!-- HOME -->
+<!-- ===== HOME ===== -->
 <div id="page-home" class="page active">
   <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-accent"></div>
-    <div class="hero-tag" id="hero-tag">⬤ Season 2025 — iRacing</div>
-    <h1 class="hero-title">
-      IGP<span class="red">FUN</span><br>
-      <span class="italic" id="hero-subtitle-line">Super Formula</span><br>
-      Light
-    </h1>
-    <p class="hero-sub" id="hero-text">Loading...</p>
+    <div class="hero-car-wrap">
+      <div class="hero-car-glow"></div>
+      <img class="hero-car" src="images/car.png" alt="IGPFun Super Formula Light">
+    </div>
+    <div class="hero-tag"   id="hero-tag"></div>
+    <h1 class="hero-title"  id="hero-title"></h1>
+    <p class="hero-sub"     id="hero-sub"></p>
     <div class="hero-cta">
-      <button class="btn-primary" onclick="showPage('standings')">Standings →</button>
+      <button class="btn-primary"   onclick="showPage('standings')">Standings →</button>
       <button class="btn-secondary" onclick="showPage('calendar')">Race Calendar</button>
     </div>
     <div class="hero-stats" id="hero-stats"></div>
@@ -235,7 +915,7 @@
       <div class="section-line"></div>
       <span class="section-tag">News</span>
     </div>
-    <div class="news-grid" id="home-news-grid"><div class="loading">LOADING NEWS...</div></div>
+    <div class="news-grid" id="home-news-grid"></div>
   </div>
 
   <footer>
@@ -245,326 +925,403 @@
       <li><a id="footer-discord" href="#">Discord</a></li>
       <li><a id="footer-iracing" href="#">iRacing League</a></li>
     </ul>
-    <div class="footer-copy" id="footer-copy">© 2025 IGPFUN</div>
+    <div class="footer-copy" id="footer-copy"></div>
   </footer>
 </div>
 
-<!-- NEWS -->
+<!-- ===== NEWS ===== -->
 <div id="page-news" class="page">
   <div class="page-inner">
     <h1 class="page-title">News & Announcements</h1>
     <div class="page-sub">LEAGUE UPDATES — SEASON 2025</div>
-    <div class="news-list" id="news-list"><div class="loading">LOADING...</div></div>
+    <div class="news-list" id="news-list"></div>
   </div>
 </div>
 
-<!-- CALENDAR -->
+<!-- ===== CALENDAR ===== -->
 <div id="page-calendar" class="page">
   <div class="page-inner">
     <h1 class="page-title">Race Calendar</h1>
-    <div class="page-sub" id="calendar-sub">SEASON 2025 — iRACING</div>
-    <div class="calendar-grid" id="calendar-grid"><div class="loading">LOADING...</div></div>
+    <div class="page-sub" id="calendar-sub"></div>
+    <div class="calendar-grid" id="calendar-grid"></div>
   </div>
 </div>
 
-<!-- STANDINGS -->
+<!-- ===== STANDINGS ===== -->
 <div id="page-standings" class="page">
   <div class="page-inner">
     <h1 class="page-title">Standings</h1>
-    <div class="page-sub" id="standings-sub">SEASON 2025</div>
+    <div class="page-sub" id="standings-sub"></div>
     <div class="tabs">
-      <div class="tab active" onclick="showTab('drivers-champ', this)">Drivers Championship</div>
-      <div class="tab" onclick="showTab('results-grid', this)">Results by Round</div>
+      <div class="tab active" onclick="showTab('piloti', this)">Drivers Championship</div>
+      <div class="tab"        onclick="showTab('risultati', this)">Results by Round</div>
     </div>
-    <div id="tab-drivers-champ" class="tab-content active">
-      <table class="standings-table" id="drivers-table"><tbody><tr><td class="loading">LOADING...</td></tr></tbody></table>
-    </div>
-    <div id="tab-results-grid" class="tab-content">
-      <table class="standings-table" id="results-table"><tbody><tr><td class="loading">LOADING...</td></tr></tbody></table>
-      <p class="table-note">+1 = FASTEST LAP POINT &nbsp;|&nbsp; DNF = DID NOT FINISH &nbsp;|&nbsp; DSQ = DISQUALIFIED</p>
-    </div>
+    <div id="tab-piloti"    class="tab-content active"></div>
+    <div id="tab-risultati" class="tab-content"></div>
   </div>
 </div>
 
-<!-- DRIVERS -->
+<!-- ===== DRIVERS ===== -->
 <div id="page-drivers" class="page">
   <div class="page-inner">
     <h1 class="page-title">Drivers</h1>
-    <div class="page-sub" id="drivers-sub">SEASON 2025</div>
-    <div class="drivers-grid" id="drivers-grid"><div class="loading">LOADING...</div></div>
+    <div class="page-sub" id="drivers-sub"></div>
+    <div class="drivers-grid" id="drivers-grid"></div>
   </div>
 </div>
 
-<!-- REGULATIONS -->
+<!-- ===== REGULATIONS ===== -->
 <div id="page-rules" class="page">
   <div class="reg-layout">
     <div class="reg-sidebar">
       <div class="reg-sidebar-title">Sections</div>
       <div id="reg-sidebar-nav"></div>
     </div>
-    <div class="reg-content" id="reg-content"><div class="loading">LOADING...</div></div>
+    <div class="reg-content" id="reg-content"></div>
   </div>
 </div>
 
+<!-- ===== RACE BRIEFING ===== -->
+<div id="page-briefing" class="page">
+  <div class="page-inner">
+    <button class="back-btn" onclick="showPage('calendar')">← Back to Calendar</button>
+    <h1 class="page-title" id="briefing-title"></h1>
+    <div class="page-sub"   id="briefing-sub"></div>
+    <div class="briefing-info-grid" id="briefing-cards"></div>
+    <div class="track-map-section"  id="briefing-map"></div>
+  </div>
+</div>
+
+<!-- DATA FILES (edit the files in the /data folder) -->
+<script src="data/config.js"></script>
+<script src="data/news.js"></script>
+<script src="data/calendar.js"></script>
+<script src="data/standings.js"></script>
+<script src="data/drivers.js"></script>
+<script src="data/regulations.js"></script>
+
 <script>
-// ─── NAVIGATION ───────────────────────────────────────────
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  document.getElementById('nav-' + page).classList.add('active');
-  window.scrollTo(0, 0);
-}
+  /* ── NAVIGATION ──────────────────────────────────── */
 
-function showTab(tab, el) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  el.classList.add('active');
-}
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    const navEl = document.getElementById('nav-' + page);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo(0, 0);
+  }
 
-// ─── DATA LOADER ──────────────────────────────────────────
-async function load(file) {
-  const res = await fetch('data/' + file);
-  return res.json();
-}
+  function showTab(tab, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    el.classList.add('active');
+  }
 
-// ─── POSITION COLOR ───────────────────────────────────────
-function posColor(i) {
-  if (i === 0) return 'var(--gold)';
-  if (i === 1) return 'var(--silver)';
-  if (i === 2) return 'var(--bronze)';
-  return 'inherit';
-}
-function posClass(i) {
-  if (i === 0) return 'p1';
-  if (i === 1) return 'p2';
-  if (i === 2) return 'p3';
-  return '';
-}
+  function showRegSection(sec, el) {
+    document.querySelectorAll('.reg-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.reg-nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('reg-' + sec).classList.add('active');
+    el.classList.add('active');
+  }
 
-// ─── CONFIG ───────────────────────────────────────────────
-async function loadConfig() {
-  const c = await load('config.json');
-  document.getElementById('nav-subtitle').textContent = c.subtitle;
-  document.getElementById('hero-tag').textContent = `⬤ Season ${c.season} — ${c.simulator}`;
-  document.getElementById('hero-text').textContent = c.heroText;
-  document.getElementById('calendar-sub').textContent = `SUPER FORMULA LIGHT — ${c.stats.rounds} ROUNDS — ${c.simulator} — SEASON ${c.season}`;
-  document.getElementById('standings-sub').textContent = c.standingsSubtitle.toUpperCase();
-  document.getElementById('drivers-sub').textContent = `SEASON ${c.season} — ${c.stats.drivers} REGISTERED`;
-  document.getElementById('footer-copy').textContent = `© ${c.season} IGPFUN — ${c.subtitle}`;
-  if (c.links.discord !== '#') document.getElementById('footer-discord').href = c.links.discord;
-  if (c.links.iracing !== '#') document.getElementById('footer-iracing').href = c.links.iracing;
+  /* ── RACE BRIEFING ───────────────────────────────── */
 
-  // Hero stats
-  const statsEl = document.getElementById('hero-stats');
-  const items = [
-    { val: c.stats.drivers, label: 'Drivers' },
-    { val: c.stats.rounds, label: 'Rounds' },
-    { val: c.stats.completed, label: 'Completed' },
-    { val: c.stats.penalties, label: 'Penalties' }
-  ];
-  statsEl.innerHTML = items.map(s => `
-    <div class="stat-item">
-      <div class="stat-num">${s.val}<span>.</span></div>
-      <div class="stat-label">${s.label}</div>
-    </div>`).join('');
+  function showBriefing(roundNum) {
+    const race = CALENDAR_DATA.find(r => r.round === roundNum);
+    if (!race) return;
 
-  return c;
-}
+    document.getElementById('briefing-title').textContent =
+      `Round ${String(roundNum).padStart(2, '0')} — ${race.track}`;
+    document.getElementById('briefing-sub').textContent =
+      `${race.flag} ${race.location.toUpperCase()} — ${race.date} — ${race.time}`;
 
-// ─── NEWS ─────────────────────────────────────────────────
-async function loadNews() {
-  const news = await load('news.json');
-
-  // Home grid: featured first, then up to 3 more
-  const featured = news.find(n => n.featured) || news[0];
-  const others = news.filter(n => n.id !== featured.id).slice(0, 3);
-
-  const gridEl = document.getElementById('home-news-grid');
-  gridEl.innerHTML = `
-    <div class="news-card featured">
-      <div class="news-cat">${featured.emoji} ${featured.category}</div>
-      <div class="news-title">${featured.title}</div>
-      <div class="news-body">${featured.body}</div>
-      <div class="news-date">${featured.date}${featured.time ? ' — ' + featured.time : ''}</div>
-    </div>
-    ${others.map(n => `
-    <div class="news-card">
-      <div class="news-cat">${n.emoji} ${n.category}</div>
-      <div class="news-title">${n.title}</div>
-      <div class="news-body">${n.body}</div>
-      <div class="news-date">${n.date}</div>
-    </div>`).join('')}`;
-
-  // Full news list
-  const listEl = document.getElementById('news-list');
-  listEl.innerHTML = news.map(n => `
-    <div class="news-item">
-      <div>
-        <div class="ni-cat">${n.emoji} ${n.category}</div>
-        <div class="ni-title">${n.title}</div>
-        <div class="ni-body">${n.body}</div>
+    const b = race.briefing;
+    document.getElementById('briefing-cards').innerHTML = `
+      <div class="briefing-card">
+        <div class="briefing-card-label">Race Duration</div>
+        <div class="briefing-card-value">${b.duration}</div>
+        <div class="briefing-card-sub">${b.laps} laps</div>
       </div>
-      <div class="ni-date">${n.date}${n.time ? '<br>' + n.time : ''}</div>
-    </div>`).join('');
-}
+      <div class="briefing-card">
+        <div class="briefing-card-label">Fuel Recommendation</div>
+        <div class="briefing-card-value">${b.fuelPerLap}</div>
+        <div class="briefing-card-sub">${b.fuelTotal}</div>
+      </div>`;
 
-// ─── CALENDAR ─────────────────────────────────────────────
-async function loadCalendar() {
-  const races = await load('calendar.json');
-  const el = document.getElementById('calendar-grid');
-  el.innerHTML = races.map(r => {
-    const roundStr = String(r.round).padStart(2, '0');
-    const isNext = r.status === 'next';
-    const isDone = r.status === 'completed';
-    return `
-    <div class="race-row ${r.status}">
-      <div class="round-num">${roundStr}</div>
-      <div class="race-info">
-        <div class="race-track">${isNext ? '<span class="next-badge"></span>' : ''}${r.flag} ${r.track}</div>
-        <div class="race-country">${r.country}</div>
-      </div>
-      <div class="race-date-col">${r.date}<br><span class="race-time">${r.time}</span></div>
-      <div class="race-winner">
-        ${isDone
-          ? `<div class="winner-label">winner</div><div class="winner-name">🏆 ${r.winner}</div>`
-          : `<div class="tbd">${isNext ? '— TBD —' : '— TBD —'}</div>`}
-      </div>
-    </div>`;
-  }).join('');
-}
+    const mapEl = document.getElementById('briefing-map');
+    if (b.trackMap) {
+      mapEl.innerHTML = `
+        <div class="track-map-label">Track Map</div>
+        <img class="track-map-img"
+             src="${b.trackMap}"
+             alt="${race.track} track map"
+             onerror="this.outerHTML='<div class=\\'track-map-placeholder\\'><span class=\\'ph-icon\\'>🗺</span><span class=\\'ph-text\\'>IMAGE NOT FOUND<br>${b.trackMap}</span></div>'">`;
+    } else {
+      mapEl.innerHTML = `
+        <div class="track-map-label">Track Map</div>
+        <div class="track-map-placeholder">
+          <span class="ph-icon">🗺</span>
+          <span class="ph-text">NO TRACK MAP CONFIGURED</span>
+        </div>`;
+    }
 
-// ─── STANDINGS ────────────────────────────────────────────
-async function loadStandings(config) {
-  const drivers = await load('drivers.json');
-  const roundLabels = config.calendar.roundLabels;
+    showPage('briefing');
+  }
 
-  // Sorted by points
-  const sorted = [...drivers].sort((a, b) => b.points - a.points);
+  /* ── RENDER: HERO ────────────────────────────────── */
 
-  // Drivers championship table
-  const dTable = document.getElementById('drivers-table');
-  dTable.innerHTML = `
-    <thead><tr>
-      <th>Pos</th><th>#</th><th>Driver</th><th>Races</th><th>Wins</th><th>Podiums</th>
-      <th style="text-align:right">Points</th>
-    </tr></thead>
-    <tbody>
-      ${sorted.map((d, i) => `
-      <tr class="${i === 0 ? 'highlight-row' : ''}">
-        <td><div class="pos-num ${posClass(i)}">${i + 1}</div></td>
-        <td><span class="driver-num">#${d.number}</span></td>
-        <td>
-          <div class="driver-name"><span class="flag">${d.flag}</span>${d.firstName} ${d.lastName}</div>
-          <div class="driver-nat">${d.nationality}</div>
-        </td>
-        <td>${d.races}</td>
-        <td>${d.wins}</td>
-        <td>${d.podiums}</td>
-        <td><div class="points">${d.points}<br><span class="pts-label">PTS</span></div></td>
-      </tr>`).join('')}
-    </tbody>`;
+  function renderHero() {
+    document.getElementById('hero-tag').textContent =
+      `⬤ ${SITE_CONFIG.season} — ${SITE_CONFIG.platform}`;
+    document.getElementById('hero-title').innerHTML =
+      `IGP<span class="red">FUN</span><br>
+       <span class="italic">Super Formula</span><br>
+       Light`;
+    document.getElementById('hero-sub').textContent = SITE_CONFIG.heroSubtitle;
 
-  // Results by round table
-  const completedRounds = roundLabels.length;
-  const rTable = document.getElementById('results-table');
-  rTable.innerHTML = `
-    <thead><tr>
-      <th>Driver</th>
-      ${roundLabels.map(l => `<th>${l}</th>`).join('')}
-      <th style="text-align:right">Total</th>
-    </tr></thead>
-    <tbody>
-      ${sorted.map((d, i) => `
-      <tr class="${i === 0 ? 'highlight-row' : ''}">
-        <td><div class="driver-name">${d.firstName.charAt(0)}. ${d.lastName}</div></td>
-        ${d.results.slice(0, completedRounds).map(pts => {
-          const isWin = pts === Math.max(...sorted.map(x => x.results[d.results.indexOf(pts)] || 0)) && pts > 0;
-          const display = pts === 0 ? 'DNF' : pts;
-          return `<td><div class="race-pts"><span class="rp ${pts >= 25 ? 'win' : ''}">${display}</span></div></td>`;
-        }).join('')}
-        <td><div class="points">${d.points}<br><span class="pts-label">PTS</span></div></td>
-      </tr>`).join('')}
-    </tbody>`;
-}
+    const completed = CALENDAR_DATA.filter(r => r.status === 'completed').length;
+    const stats = [
+      { num: DRIVERS_DATA.length,  label: 'Drivers'   },
+      { num: CALENDAR_DATA.length, label: 'Rounds'    },
+      { num: completed,            label: 'Completed' },
+      { num: SITE_CONFIG.penalties,label: 'Penalties' }
+    ];
+    document.getElementById('hero-stats').innerHTML = stats.map(s =>
+      `<div class="stat-item">
+         <div class="stat-num">${s.num}<span>.</span></div>
+         <div class="stat-label">${s.label}</div>
+       </div>`
+    ).join('');
+  }
 
-// ─── DRIVERS ──────────────────────────────────────────────
-async function loadDrivers() {
-  const drivers = await load('drivers.json');
-  const sorted = [...drivers].sort((a, b) => b.points - a.points);
-  const el = document.getElementById('drivers-grid');
-  el.innerHTML = sorted.map((d, i) => `
-    <div class="driver-card">
-      <div class="driver-card-num">${d.number}</div>
-      <div class="driver-card-nat">${d.flag}</div>
-      <div class="driver-card-name">${d.firstName}<br>${d.lastName}</div>
-      <div class="driver-card-team">Car #${d.number}</div>
-      <div class="driver-card-stats">
-        <div class="dcs">
-          <div class="dcs-val" style="color:${posColor(i)}">${d.points}</div>
-          <div class="dcs-label">Points</div>
+  /* ── RENDER: HOME NEWS ───────────────────────────── */
+
+  function renderHomeNews() {
+    const featured = NEWS_DATA.find(n => n.featured) || NEWS_DATA[0];
+    const others   = NEWS_DATA.filter(n => !n.featured).slice(0, 3);
+
+    let html = `
+      <div class="news-card featured" onclick="showPage('news')">
+        <div class="news-cat">${featured.category}</div>
+        <div class="news-title">${featured.title}</div>
+        <div class="news-body">${featured.body}</div>
+        <div class="news-date">${featured.date}${featured.time ? ' — ' + featured.time : ''}</div>
+      </div>`;
+    others.forEach(n => {
+      html += `
+        <div class="news-card" onclick="showPage('news')">
+          <div class="news-cat">${n.category}</div>
+          <div class="news-title">${n.title}</div>
+          <div class="news-body">${n.body}</div>
+          <div class="news-date">${n.date}</div>
+        </div>`;
+    });
+    document.getElementById('home-news-grid').innerHTML = html;
+  }
+
+  /* ── RENDER: NEWS LIST ───────────────────────────── */
+
+  function renderNewsList() {
+    document.getElementById('news-list').innerHTML = NEWS_DATA.map(n =>
+      `<div class="news-item">
+         <div>
+           <div class="ni-cat">${n.category}</div>
+           <div class="ni-title">${n.title}</div>
+           <div class="ni-body">${n.body}</div>
+         </div>
+         <div class="ni-date">${n.date}${n.time ? '<br>' + n.time : ''}</div>
+       </div>`
+    ).join('');
+  }
+
+  /* ── RENDER: CALENDAR ────────────────────────────── */
+
+  function renderCalendar() {
+    document.getElementById('calendar-sub').textContent =
+      `SUPER FORMULA LIGHT — ${CALENDAR_DATA.length} ROUNDS — ${SITE_CONFIG.platform.toUpperCase()} — SEASON ${SITE_CONFIG.seasonYear}`;
+
+    document.getElementById('calendar-grid').innerHTML = CALENDAR_DATA.map(r => {
+      const cls      = r.status === 'completed' ? 'completed' : r.status === 'next' ? 'next' : '';
+      const trackTxt = r.status === 'next'
+        ? `<span class="next-badge"></span>${r.flag} ${r.track}`
+        : `${r.flag} ${r.track}`;
+
+      let winnerCol;
+      if (r.winner) {
+        winnerCol = `<div class="race-winner">
+                       <div class="winner-label">Winner</div>
+                       <div class="winner-name">🏆 ${r.winner}</div>
+                     </div>`;
+      } else if (r.finale) {
+        winnerCol = `<div class="race-winner"><div class="tbd">— Grand Final —</div></div>`;
+      } else {
+        winnerCol = `<div class="race-winner"><div class="tbd">— TBD —</div></div>`;
+      }
+
+      return `
+        <div class="race-row ${cls}" onclick="showBriefing(${r.round})">
+          <div class="round-num">${String(r.round).padStart(2, '0')}</div>
+          <div class="race-info">
+            <div class="race-track">${trackTxt}</div>
+            <div class="race-country">${r.location}</div>
+            <div class="race-briefing-hint">→ VIEW BRIEFING</div>
+          </div>
+          <div class="race-date-col">${r.date}<br><span class="race-time">${r.time}</span></div>
+          ${winnerCol}
+        </div>`;
+    }).join('');
+  }
+
+  /* ── RENDER: STANDINGS ───────────────────────────── */
+
+  function renderStandings() {
+    const { lastRound, rounds, drivers } = STANDINGS_DATA;
+    document.getElementById('standings-sub').textContent =
+      `AFTER ROUND ${lastRound.num} — ${lastRound.name.toUpperCase()}`;
+
+    const posClass = p => p === 1 ? 'p1' : p === 2 ? 'p2' : p === 3 ? 'p3' : '';
+
+    document.getElementById('tab-piloti').innerHTML = `
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>Pos</th><th>#</th><th>Driver</th><th>Races</th>
+            <th>Wins</th><th>Podiums</th><th style="text-align:right">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${drivers.map((d, i) => `
+            <tr${i === 0 ? ' class="highlight-row"' : ''}>
+              <td><div class="pos-num ${posClass(d.pos)}">${d.pos}</div></td>
+              <td><span class="driver-num">#${d.number}</span></td>
+              <td>
+                <div class="driver-name"><span class="flag">${d.flag}</span>${d.name}</div>
+                <div class="driver-nat">${d.country}</div>
+              </td>
+              <td>${d.races}</td><td>${d.wins}</td><td>${d.podiums}</td>
+              <td><div class="points">${d.points}<br><span class="pts-label">PTS</span></div></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>`;
+
+    const roundHeaders = rounds.map(r => `<th>${r.short}</th>`).join('');
+    document.getElementById('tab-risultati').innerHTML = `
+      <table class="standings-table">
+        <thead>
+          <tr><th>Driver</th>${roundHeaders}<th style="text-align:right">Total</th></tr>
+        </thead>
+        <tbody>
+          ${drivers.map((d, i) => {
+            const initials = d.name.split(' ').map((n, j) => j === 0 ? n[0] + '.' : n).join(' ');
+            const resCols  = rounds.map(r => {
+              const val   = d.results[r.num] || '—';
+              const isWin = String(val).startsWith('25') && val !== '—';
+              return `<td><div class="race-pts"><span class="rp${isWin ? ' win' : ''}">${val}</span></div></td>`;
+            }).join('');
+            return `
+              <tr${i === 0 ? ' class="highlight-row"' : ''}>
+                <td><div class="driver-name">${initials}</div></td>
+                ${resCols}
+                <td><div class="points">${d.points}<br><span class="pts-label">PTS</span></div></td>
+              </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+      <p style="margin-top:1rem;font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--grey);letter-spacing:0.1em;">
+        +1 = FASTEST LAP &nbsp;|&nbsp; DNF = DID NOT FINISH &nbsp;|&nbsp; DSQ = DISQUALIFIED
+      </p>`;
+  }
+
+  /* ── RENDER: DRIVERS ─────────────────────────────── */
+
+  function renderDrivers() {
+    document.getElementById('drivers-sub').textContent =
+      `SEASON ${SITE_CONFIG.seasonYear} — ${DRIVERS_DATA.length} REGISTERED`;
+
+    const sorted  = [...DRIVERS_DATA].sort((a, b) => b.points - a.points);
+    const ptColor = d => {
+      const rank = sorted.indexOf(d);
+      if (rank === 0) return 'var(--gold)';
+      if (rank === 1) return 'var(--silver)';
+      if (rank === 2) return 'var(--bronze)';
+      return 'var(--white)';
+    };
+
+    document.getElementById('drivers-grid').innerHTML = DRIVERS_DATA.map(d => `
+      <div class="driver-card">
+        <div class="driver-card-num">${d.number}</div>
+        <div class="driver-card-nat">${d.flag}</div>
+        <div class="driver-card-name">${d.firstName}<br>${d.lastName}</div>
+        <div class="driver-card-team">Car #${d.number}</div>
+        <div class="driver-card-stats">
+          <div class="dcs">
+            <div class="dcs-val" style="color:${ptColor(d)}">${d.points}</div>
+            <div class="dcs-label">Points</div>
+          </div>
+          <div class="dcs">
+            <div class="dcs-val" style="color:var(--red)">${d.wins}</div>
+            <div class="dcs-label">Wins</div>
+          </div>
+          <div class="dcs">
+            <div class="dcs-val">${d.podiums}</div>
+            <div class="dcs-label">Podiums</div>
+          </div>
         </div>
-        <div class="dcs">
-          <div class="dcs-val" style="color:${d.wins > 0 ? 'var(--red)' : 'inherit'}">${d.wins}</div>
-          <div class="dcs-label">Wins</div>
-        </div>
-        <div class="dcs">
-          <div class="dcs-val">${d.podiums}</div>
-          <div class="dcs-label">Podiums</div>
-        </div>
-      </div>
-    </div>`).join('');
-}
+      </div>`).join('');
+  }
 
-// ─── REGULATIONS ──────────────────────────────────────────
-async function loadRegulations() {
-  const reg = await load('regulations.json');
-  const nav = document.getElementById('reg-sidebar-nav');
-  const content = document.getElementById('reg-content');
+  /* ── RENDER: REGULATIONS ─────────────────────────── */
 
-  nav.innerHTML = reg.sections.map((s, i) => `
-    <a class="reg-nav-item ${i === 0 ? 'active' : ''}"
-       onclick="switchRegSection('${s.id}', this)">${s.title}</a>`).join('');
+  function renderRegulations() {
+    document.getElementById('reg-sidebar-nav').innerHTML =
+      REGULATIONS_DATA.sections.map((s, i) =>
+        `<a class="reg-nav-item${i === 0 ? ' active' : ''}"
+            onclick="showRegSection('${s.id}', this)">${s.title}</a>`
+      ).join('');
 
-  content.innerHTML = reg.sections.map((s, i) => `
-    <div id="reg-${s.id}" class="reg-section ${i === 0 ? 'active' : ''}">
-      <div class="reg-title">${s.title}</div>
-      <div class="reg-version">VERSION ${reg.version} — UPDATED ${reg.updated.toUpperCase()}</div>
-      ${s.articles.map(a => `
-      <div class="reg-article">
-        <div class="art-num">${a.number}</div>
-        <div class="art-title">${a.title}</div>
-        <div class="art-body">${a.content}</div>
-        ${a.table ? `
-        <table class="rule-table">
-          <thead><tr>${a.table.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-          <tbody>${a.table.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
-        </table>` : ''}
-      </div>`).join('')}
-    </div>`).join('');
-}
+    document.getElementById('reg-content').innerHTML =
+      REGULATIONS_DATA.sections.map((s, i) => `
+        <div id="reg-${s.id}" class="reg-section${i === 0 ? ' active' : ''}">
+          <div class="reg-title">${s.title}</div>
+          <div class="reg-version">VERSION ${REGULATIONS_DATA.version} — UPDATED ${REGULATIONS_DATA.updated}</div>
+          ${s.articles.map(a => `
+            <div class="reg-article">
+              <div class="art-num">${a.num}</div>
+              <div class="art-title">${a.title}</div>
+              <div class="art-body">${a.body}</div>
+            </div>`).join('')}
+        </div>`).join('');
+  }
 
-function switchRegSection(id, el) {
-  document.querySelectorAll('.reg-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.reg-nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('reg-' + id).classList.add('active');
-  el.classList.add('active');
-}
+  /* ── RENDER: FOOTER ──────────────────────────────── */
 
-// ─── INIT ─────────────────────────────────────────────────
-async function init() {
-  const config = await loadConfig();
-  await Promise.all([
-    loadNews(),
-    loadCalendar(),
-    loadStandings(config),
-    loadDrivers(),
-    loadRegulations()
-  ]);
-}
+  function renderFooter() {
+    document.getElementById('footer-copy').textContent =
+      `© ${new Date().getFullYear()} IGPFUN — Super Formula Light`;
+    const discord = document.getElementById('footer-discord');
+    const iracing = document.getElementById('footer-iracing');
+    if (SITE_CONFIG.discordUrl && SITE_CONFIG.discordUrl !== '#') {
+      discord.href = SITE_CONFIG.discordUrl; discord.target = '_blank';
+    }
+    if (SITE_CONFIG.iracingUrl && SITE_CONFIG.iracingUrl !== '#') {
+      iracing.href = SITE_CONFIG.iracingUrl; iracing.target = '_blank';
+    }
+  }
 
-init();
+  /* ── INIT ────────────────────────────────────────── */
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderHero();
+    renderHomeNews();
+    renderNewsList();
+    renderCalendar();
+    renderStandings();
+    renderDrivers();
+    renderRegulations();
+    renderFooter();
+  });
 </script>
 </body>
 </html>
