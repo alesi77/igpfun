@@ -110,7 +110,10 @@
   }
   .hero-bg {
     position: absolute; inset: 0;
-    background: #000000;  /* TEST: pure black */
+    background:
+      linear-gradient(to right, transparent 36%, rgba(0,0,0,0.96) 100%),
+      radial-gradient(ellipse 42% 22% at 80% 94%, rgba(232,0,30,0.14) 0%, transparent 70%),
+      linear-gradient(180deg, #0a0a0a 0%, #060606 100%);
   }
   .hero-grid {
     position: absolute; inset: 0;
@@ -804,11 +807,11 @@
     /* horizontal fade on left (blends into text area) + vertical fade at top (hides JPEG sky artifacts) */
     -webkit-mask-image:
       linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, black 34%),
-      linear-gradient(to bottom, transparent 0%, black 22%);
+      linear-gradient(to bottom, transparent 0%, transparent 12%, black 30%);
     -webkit-mask-composite: source-in;
     mask-image:
       linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 16%, black 34%),
-      linear-gradient(to bottom, transparent 0%, black 22%);
+      linear-gradient(to bottom, transparent 0%, transparent 12%, black 30%);
     mask-composite: intersect;
   }
   .hero-car-glow {
