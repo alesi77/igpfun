@@ -1,0 +1,102 @@
+[
+  {
+    "round": 1,
+    "track": "Fuji Speedway",
+    "country": "Japan",
+    "flag": "🇯🇵",
+    "date": "DEC 14, 2024",
+    "time": "21:00 CET",
+    "status": "completed",
+    "winner": "M. Rossi"
+  },
+  {
+    "round": 2,
+    "track": "Autodromo Enzo e Dino Ferrari",
+    "country": "Imola, Italy",
+    "flag": "🇮🇹",
+    "date": "DEC 21, 2024",
+    "time": "21:00 CET",
+    "status": "completed",
+    "winner": "L. Bianchi"
+  },
+  {
+    "round": 3,
+    "track": "Autodromo Nazionale Monza",
+    "country": "Monza, Italy",
+    "flag": "🇮🇹",
+    "date": "JAN 4, 2025",
+    "time": "21:00 CET",
+    "status": "completed",
+    "winner": "A. Esposito"
+  },
+  {
+    "round": 4,
+    "track": "Suzuka Circuit",
+    "country": "Japan",
+    "flag": "🇯🇵",
+    "date": "JAN 18, 2025",
+    "time": "21:00 CET",
+    "status": "completed",
+    "winner": "M. Rossi"
+  },
+  {
+    "round": 5,
+    "track": "Circuit de Spa-Francorchamps",
+    "country": "Belgium",
+    "flag": "🇧🇪",
+    "date": "JAN 25, 2025",
+    "time": "21:00 CET",
+    "status": "next",
+    "winner": ""
+  },
+  {
+    "round": 6,
+    "track": "Road Atlanta",
+    "country": "Georgia, USA",
+    "flag": "🇺🇸",
+    "date": "FEB 8, 2025",
+    "time": "21:00 CET",
+    "status": "upcoming",
+    "winner": ""
+  },
+  {
+    "round": 7,
+    "track": "Nürburgring",
+    "country": "Germany",
+    "flag": "🇩🇪",
+    "date": "FEB 22, 2025",
+    "time": "21:00 CET",
+    "status": "upcoming",
+    "winner": ""
+  },
+  {
+    "round": 8,
+    "track": "Silverstone Circuit",
+    "country": "Great Britain",
+    "flag": "🇬🇧",
+    "date": "MAR 8, 2025",
+    "time": "21:00 CET",
+    "status": "upcoming",
+    "winner": ""
+  },
+  {
+    "round": 9,
+    "track": "Mount Panorama",
+    "country": "Bathurst, Australia",
+    "flag": "🇦🇺",
+    "date": "MAR 22, 2025",
+    "time": "21:00 CET",
+    "status": "upcoming",
+    "winner": ""
+  },
+  {
+    "round": 10,
+    "track": "Autopolis",
+    "country": "Japan — Season Finale",
+    "flag": "🇯🇵",
+    "date": "APR 5, 2025",
+    "time": "21:00 CET",
+    "status": "upcoming",
+    "winner": ""
+  }
+]

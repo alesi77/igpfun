@@ -1,0 +1,21 @@
+{
+  "leagueName": "IGPFun",
+  "subtitle": "Super Formula Light",
+  "season": "2025",
+  "simulator": "iRacing",
+  "heroText": "The premier sim racing league dedicated to Super Formula Light on iRacing. Speed, precision and fair play every week.",
+  "stats": {
+    "drivers": 16,
+    "rounds": 10,
+    "completed": 4,
+    "penalties": 0
+  },
+  "standingsSubtitle": "After Round 4 — Suzuka Circuit",
+  "calendar": {
+    "roundLabels": ["R1 Fuji", "R2 Imola", "R3 Monza", "R4 Suzuka"]
+  },
+  "links": {
+    "discord": "#",
+    "iracing": "#"
+  }
+}
